@@ -1,23 +1,19 @@
-// import { JsonFilePersister } from 'pip-services3-data-node';
+import 'package:pip_services3_data/pip_services3_data.dart';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import '../data/version1/BeaconV1.dart';
+import './BeaconsMemoryPersistence.dart';
 
-// import { BeaconV1 } from '../data/version1/BeaconV1';
-// import { BeaconsMemoryPersistence } from './BeaconsMemoryPersistence';
-// import { ConfigParams } from 'pip-services3-commons-node';
+class BeaconsFilePersistence extends BeaconsMemoryPersistence {
+  JsonFilePersister<BeaconV1> persister;
 
-// export class BeaconsFilePersistence extends BeaconsMemoryPersistence {
-//     protected _persister: JsonFilePersister<BeaconV1>;
-
-//     constructor(path?: string) {
-//         super();
-
-//         this._persister = new JsonFilePersister<BeaconV1>(path);
-//         this._loader = this._persister;
-//         this._saver = this._persister;
-//     }
-
-//     public configure(config: ConfigParams) {
-//         super.configure(config);
-//         this._persister.configure(config);
-//     }
-    
-// }
+  BeaconsFilePersistence([String path]) : super() {
+    persister = JsonFilePersister<BeaconV1>(path);
+    loader = persister;
+    saver = persister;
+  }
+  @override
+  void configure(ConfigParams config) {
+    super.configure(config);
+    persister.configure(config);
+  }
+}

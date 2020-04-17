@@ -1,67 +1,68 @@
-// let _ = require('lodash');
+import 'dart:async';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import 'package:pip_services3_data/pip_services3_data.dart';
+import '../data/version1/BeaconV1.dart';
+import './IBeaconsPersistence.dart';
 
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
+class BeaconsMemoryPersistence
+    extends IdentifiableMemoryPersistence<BeaconV1, String>
+    implements IBeaconsPersistence {
+  BeaconsMemoryPersistence() : super() {
+    maxPageSize = 1000;
+  }
 
-// import { IdentifiableMemoryPersistence } from 'pip-services3-data-node';
+  dynamic composeFilter(FilterParams filter) {
+    filter = filter ?? FilterParams();
 
-// import { BeaconV1 } from '../data/version1/BeaconV1';
-// import { IBeaconsPersistence } from './IBeaconsPersistence';
+    var id = filter.getAsNullableString('id');
+    var siteId = filter.getAsNullableString('site_id');
+    var label = filter.getAsNullableString('label');
+    var udi = filter.getAsNullableString('udi');
+    var udis = filter.getAsObject('udis');
+    if (udis is String) {
+      udis = (udis as String).split(',');
+    }
+    if (!udis is List) {
+      udis = null;
+    }
 
-// export class BeaconsMemoryPersistence
-//     extends IdentifiableMemoryPersistence<BeaconV1, string>
-//     implements IBeaconsPersistence {
+    return (item) {
+      if (id != null && item.id != id) {
+        return false;
+      }
+      if (siteId != null && item.site_id != siteId) {
+        return false;
+      }
+      if (label != null && item.label != label) {
+        return false;
+      }
+      if (udi != null && item.udi != udi) {
+        return false;
+      }
+      if (udis != null && (udis as List).indexOf(item.udi) < 0) {
+        return false;
+      }
+      return true;
+    };
+  }
 
-//     constructor() {
-//         super();
+  @override
+  Future<DataPage<BeaconV1>> getPageByFilter(
+      String correlationId, FilterParams filter, PagingParams paging) {
+    return super
+        .getPageByFilterEx(correlationId, composeFilter(filter), paging, null);
+  }
 
-//         this._maxPageSize = 1000;
-//     }
+  @override
+  Future<BeaconV1> getOneByUdi(String correlationId, String udi) async {
+    var item = items.firstWhere((item) => item.udi == udi);
 
-//     private composeFilter(filter: FilterParams): any {
-//         filter = filter || new FilterParams();
+    if (item != null) {
+      logger.trace(correlationId, 'Found beacon by %s', [udi]);
+    } else {
+      logger.trace(correlationId, 'Cannot find beacon by %s', [udi]);
+    }
 
-//         let id = filter.getAsNullableString('id');
-//         let siteId = filter.getAsNullableString('site_id');
-//         let label = filter.getAsNullableString('label');
-//         let udi = filter.getAsNullableString('udi');
-//         let udis = filter.getAsObject('udis');
-//         if (_.isString(udis))
-//             udis = udis.split(',');
-//         if (!_.isArray(udis))
-//             udis = null;
-
-//         return (item) => {
-//             if (id != null && item.id != id)
-//                 return false;
-//             if (siteId != null && item.site_id != siteId)
-//                 return false;
-//             if (label != null && item.label != label)
-//                 return false;
-//             if (udi != null && item.udi != udi)
-//                 return false;
-//             if (udis != null && _.indexOf(udis, item.udi) < 0)
-//                 return false;
-//             return true;
-//         };
-//     }
-
-//     public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void {
-//         super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
-//     }
-
-//     public getOneByUdi(correlationId: string, udi: string,
-//         callback: (err: any, item: BeaconV1) => void): void {
-        
-//         let item = _.find(this._items, (item) => item.udi == udi);
-
-//         if (item != null) this._logger.trace(correlationId, "Found beacon by %s", udi);
-//         else this._logger.trace(correlationId, "Cannot find beacon by %s", udi);
-
-//         callback(null, item);
-//     }
-
-
-// }
+    return item;
+  }
+}

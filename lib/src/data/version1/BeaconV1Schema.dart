@@ -1,18 +1,13 @@
-// import { ObjectSchema } from 'pip-services3-commons-node';
-// import { TypeCode } from 'pip-services3-commons-node';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// export class BeaconV1Schema extends ObjectSchema {
-    
-//     public constructor()
-//     {
-//         super();
-
-//         this.withOptionalProperty('id', TypeCode.String);
-//         this.withRequiredProperty('site_id', TypeCode.String);
-//         this.withOptionalProperty('type', TypeCode.String);
-//         this.withRequiredProperty('udi', TypeCode.String);
-//         this.withOptionalProperty('label', TypeCode.String);
-//         this.withOptionalProperty('center', null);
-//         this.withOptionalProperty('radius', TypeCode.Float);
-//     }
-// }
+class BeaconV1Schema extends ObjectSchema {
+  BeaconV1Schema() : super() {
+    withOptionalProperty('id', TypeCode.String);
+    withRequiredProperty('site_id', TypeCode.String);
+    withOptionalProperty('type', TypeCode.String);
+    withRequiredProperty('udi', TypeCode.String);
+    withOptionalProperty('label', TypeCode.String);
+    withOptionalProperty('center', null);
+    withOptionalProperty('radius', TypeCode.Float);
+  }
+}

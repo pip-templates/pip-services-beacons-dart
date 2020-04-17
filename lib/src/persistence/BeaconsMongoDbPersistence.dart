@@ -1,72 +1,81 @@
-// let _ = require('lodash');
+import 'dart:async';
+import 'package:mongo_dart_query/mongo_dart_query.dart' as mngquery;
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import 'package:pip_services3_mongodb/pip_services3_mongodb.dart';
 
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
+import '../data/version1/BeaconV1.dart';
+import './IBeaconsPersistence.dart';
 
-// import { IdentifiableMongoDbPersistence } from 'pip-services3-mongodb-node';
+class BeaconsMongoDbPersistence
+    extends IdentifiableMongoDbPersistence<BeaconV1, String>
+    implements IBeaconsPersistence {
+  BeaconsMongoDbPersistence() : super('beacons') {
+    maxPageSize = 1000;
+  }
 
-// import { BeaconV1 } from '../data/version1/BeaconV1';
-// import { IBeaconsPersistence } from './IBeaconsPersistence';
+  dynamic composeFilter(FilterParams filter) {
+    filter = filter ?? FilterParams();
 
-// export class BeaconsMongoDbPersistence
-//     extends IdentifiableMongoDbPersistence<BeaconV1, string>
-//     implements IBeaconsPersistence {
-//     constructor() {
-//         super('beacons');
-//         this._maxPageSize = 1000;
-//     }
+    var criteria = [];
 
-//     private composeFilter(filter: FilterParams): any {
-//         filter = filter || new FilterParams();
+    var id = filter.getAsNullableString('id');
+    if (id != null) {
+      criteria.add({'_id': id});
+    }
 
-//         let criteria = [];
+    var siteId = filter.getAsNullableString('site_id');
+    if (siteId != null) {
+      criteria.add({'site_id': siteId});
+    }
 
-//         let id = filter.getAsNullableString('id');
-//         if (id != null) 
-//             criteria.push({ _id: id });
+    var label = filter.getAsNullableString('label');
+    if (label != null) {
+      criteria.add({'label': label});
+    }
 
-//         let siteId = filter.getAsNullableString('site_id');
-//         if (siteId != null)
-//             criteria.push({ site_id: siteId });
+    var udi = filter.getAsNullableString('udi');
+    if (udi != null) {
+      criteria.add({'udi': udi});
+    }
 
-//         let label = filter.getAsNullableString('label');
-//         if (label != null)
-//             criteria.push({ label: label });
+    var udis = filter.getAsObject('udis');
+    if (udis is String) {
+      udis = (udis as String).split(',');
+    }
+    if (udis is List) {
+      criteria.add({
+        'udi': {r'$in': udis}
+      });
+    }
 
-//         let udi = filter.getAsNullableString('udi');
-//         if (udi != null) {
-//             criteria.push({ udi: udi });
-//         }
+    return criteria.isNotEmpty ? {r'$and': criteria} : null;
+  }
 
-//         let udis = filter.getAsObject('udis');
-//         if (_.isString(udis))
-//             udis = udis.split(',');
-//         if (_.isArray(udis))
-//             criteria.push({ udi: { $in: udis } });
+  @override
+  Future<DataPage<BeaconV1>> getPageByFilter(
+      String correlationId, FilterParams filter, PagingParams paging) async {
+    return super
+        .getPageByFilterEx(correlationId, composeFilter(filter), paging, null);
+  }
 
-//         return criteria.length > 0 ? { $and: criteria } : null;
-//     }
+  @override
+  Future<BeaconV1> getOneByUdi(String correlationId, String udi) async {
+    var filter = {'udi': udi};
+    var query = mngquery.SelectorBuilder();
+    var selector = <String, dynamic>{};
+    selector[r'$query'] = filter;
+    query.raw(selector);
 
-//     public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void {
-//         super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
-//     }
+    var item = await collection.findOne(filter);
 
-//     public getOneByUdi(correlationId: string, udi: string,
-//         callback: (err: any, item: BeaconV1) => void): void {
-
-//         let criteria = {
-//             udi: udi
-//         };
-
-//         this._collection.findOne(criteria, (err, item) => {
-//             item = this.convertToPublic(item);
-
-//             if (item != null) this._logger.trace(correlationId, "Found beacon by %s", udi);
-//             else this._logger.trace(correlationId, "Cannot find beacon by %s", udi);
-
-//             callback(err, item);
-//         });
-//     }
-// }
+    if (item == null) {
+      logger.trace(correlationId, 'Nothing found from %s with id = %s',
+          [collectionName, udi]);
+      return null;
+    }
+    logger.trace(
+        correlationId, 'Retrieved from %s with id = %s', [collectionName, udi]);
+    item = convertToPublic(item);
+    return BeaconV1.fromJson(item);
+  }
+}

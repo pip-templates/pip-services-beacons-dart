@@ -1,6 +1,6 @@
-// export class BeaconTypeV1 {
-//     public static Unknown: string = "unknown";
-//     public static AltBeacon: string = "altbeacon";
-//     public static iBeacon: string = "ibeacon";
-//     public static EddyStoneUdi: string = "eddystone-udi";
-// }
+class BeaconTypeV1 {
+     static final unknown  = 'unknown';
+     static final altBeacon  = 'altbeacon';
+     static final iBeacon  = 'ibeacon';
+     static final eddyStoneUdi  = 'eddystone-udi';
+}

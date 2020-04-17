@@ -1,25 +1,18 @@
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
+import 'dart:async';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import '../data/version1/BeaconV1.dart';
 
-// import { BeaconV1 } from '../data/version1/BeaconV1';
+abstract class IBeaconsPersistence {
+  Future<DataPage<BeaconV1>> getPageByFilter(
+      String correlationId, FilterParams filter, PagingParams paging);
 
-// export interface IBeaconsPersistence {
-//     getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, 
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void;
-    
-//     getOneById(correlationId: string, id: string, 
-//         callback: (err: any, item: BeaconV1) => void): void;
-    
-//     getOneByUdi(correlationId: string, udi: string, 
-//         callback: (err: any, item: BeaconV1) => void): void;
+  Future<BeaconV1> getOneById(String correlationId, String id);
 
-//     create(correlationId: string, item: BeaconV1, 
-//         callback: (err: any, item: BeaconV1) => void): void;
-    
-//     update(correlationId: string, item: BeaconV1, 
-//         callback: (err: any, item: BeaconV1) => void): void;
+  Future<BeaconV1> getOneByUdi(String correlationId, String udi);
 
-//     deleteById(correlationId: string, id: string, 
-//         callback: (err: any, item: BeaconV1) => void): void;
-// }
+  Future<BeaconV1> create(String correlationId, BeaconV1 item);
+
+  Future<BeaconV1> update(String correlationId, BeaconV1 item);
+
+  Future<BeaconV1> deleteById(String correlationId, String id);
+}
