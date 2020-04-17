@@ -1,13 +1,11 @@
-// import { ProcessContainer } from 'pip-services3-container-node';
-// import { DefaultRpcFactory } from 'pip-services3-rpc-node';
+import 'package:pip_services3_container/pip_services3_container.dart';
+import 'package:pip_services3_rpc/pip_services3_rpc.dart';
 
-// import {BeaconsServiceFactory} from '../build/BeaconsServiceFactory';
+import '../build/BeaconsServiceFactory.dart';
 
-// export class BeaconsProcess extends ProcessContainer{
-//     public constructor(){
-//         super('beacons', 'Beacons microservice');
-
-//         this._factories.add(new BeaconsServiceFactory());
-//         this._factories.add(new DefaultRpcFactory());
-//     }
-// }
+class BeaconsProcess extends ProcessContainer {
+  BeaconsProcess() : super('beacons', 'Beacons microservice') {
+    factories.add(BeaconsServiceFactory());
+    factories.add(DefaultRpcFactory());
+  }
+}

@@ -14,11 +14,11 @@ class BeaconV1 implements IStringIdentifiable {
     BeaconV1.from(null,null,null,null,null,null,null);
   }
 
-  BeaconV1.from(this.id, this.site_id, this.type, this.udi, this.label,
+  BeaconV1.from(this.id, this.udi, this.type, this.site_id, this.label,
       this.center, this.radius);
 
   factory BeaconV1.fromJson(Map<String, dynamic> json) {
-    return BeaconV1.from(json['id'], json['site_id'], json['type'], json['udi'],
+    return BeaconV1.from(json['id'], json['udi'], json['type'], json['site_id'],
         json['label'], json['center'], json['radius']);
   }
 

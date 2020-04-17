@@ -1,4 +1,5 @@
 
+library pip_template_microservice;
 export './src/data/version1/data.dart';
 export './src/persistence/persistence.dart';
 export './src/logic/logic.dart';

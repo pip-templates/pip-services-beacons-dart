@@ -1,1 +1,1 @@
-export "./BeaconsProcess.dart";
+export './BeaconsProcess.dart';

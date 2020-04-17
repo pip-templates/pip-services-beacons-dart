@@ -1,277 +1,192 @@
-// let _ = require('lodash');
-// let async = require('async');
-// let assert = require('chai').assert;
+import 'package:test/test.dart';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
+import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
 
-// import { BeaconV1 } from '../../src/data/version1/BeaconV1';
-// import { BeaconTypeV1 } from '../../src/data/version1/BeaconTypeV1';
-// import { IBeaconsPersistence } from '../../src/persistence/IBeaconsPersistence';
 
-// const BEACON1: BeaconV1 = {
-//     id: '1',
-//     udi: '00001',
-//     type: BeaconTypeV1.AltBeacon,
-//     site_id: '1',
-//     label: 'TestBeacon1',
-//     center: { type: 'Point', coordinates: [ 0, 0 ] },
-//     radius: 50
-// };
-// const BEACON2: BeaconV1 = {
-//     id: '2',
-//     udi: '00002',
-//     type: BeaconTypeV1.iBeacon,
-//     site_id: '1',
-//     label: 'TestBeacon2',
-//     center: { type: 'Point', coordinates: [ 2, 2 ] },
-//     radius: 70
-// };
-// const BEACON3: BeaconV1 = {
-//     id: '3',
-//     udi: '00003',
-//     type: BeaconTypeV1.AltBeacon,
-//     site_id: '2',
-//     label: 'TestBeacon3',
-//     center: { type: 'Point', coordinates: [ 10, 10 ] },
-//     radius: 50
-// };
+final BEACON1 = BeaconV1.from(
+    '1', //id:
+    '00001', //udi:
+    BeaconTypeV1.altBeacon, //type:
+    '1', //site_id:
+    'TestBeacon1', //label:
+    {
+      'type': 'Point',
+      'coordinates': [0, 0]
+    }, // center:
+    50 //radius:
+    );
+final BEACON2 = BeaconV1.from(
+    '2', //id:
+    '00002', //udi:
+    BeaconTypeV1.iBeacon, //type:
+    '1', //site_id:
+    'TestBeacon2', // label:
+    {
+      'type': 'Point',
+      'coordinates': [2, 2]
+    }, //center:
+    70 // radius:
+    );
+final BEACON3 = BeaconV1.from(
+    '3', //id:
+    '00003', //udi:
+    BeaconTypeV1.altBeacon, //type:
+    '2', // site_id:
+    'TestBeacon3', //label:
+    {
+      'type': 'Point',
+      'coordinates': [10, 10]
+    }, //center:
+    50 // radius:
+    );
 
-// export class BeaconsPersistenceFixture {
-//     private _persistence: IBeaconsPersistence;
+class BeaconsPersistenceFixture {
+  IBeaconsPersistence _persistence;
 
-//     public constructor(persistence: IBeaconsPersistence) {
-//         assert.isNotNull(persistence);
-//         this._persistence = persistence;
-//     }
+  BeaconsPersistenceFixture(IBeaconsPersistence persistence) {
+    expect(persistence, isNotNull);
+    _persistence = persistence;
+  }
 
-//     private testCreateBeacons(done) {
-//         async.series([
-//             // Create the first beacon
-//             (callback) => {
-//                 this._persistence.create(
-//                     null,
-//                     BEACON1,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
+  void _testCreateBeacons() async {
+    // Create the first beacon
+    try {
+      var beacon = await _persistence.create(null, BEACON1);
 
-//                         assert.isObject(beacon);
-//                         assert.equal(BEACON1.udi, beacon.udi);
-//                         assert.equal(BEACON1.site_id, beacon.site_id);
-//                         assert.equal(BEACON1.type, beacon.type);
-//                         assert.equal(BEACON1.label, beacon.label);
-//                         assert.isNotNull(beacon.center);
+      expect(beacon, isNotNull);
+      expect(BEACON1.udi, beacon.udi);
+      expect(BEACON1.site_id, beacon.site_id);
+      expect(BEACON1.type, beacon.type);
+      expect(BEACON1.label, beacon.label);
+      expect(beacon.center, isNotNull);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                         callback();
-//                     }
-//                 );
-//             },
-//             // Create the second beacon
-//             (callback) => {
-//                 this._persistence.create(
-//                     null,
-//                     BEACON2,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
+    // Create the second beacon
+    try {
+      var beacon = await _persistence.create(null, BEACON2);
+      expect(beacon, isNotNull);
+      expect(BEACON2.udi, beacon.udi);
+      expect(BEACON2.site_id, beacon.site_id);
+      expect(BEACON2.type, beacon.type);
+      expect(BEACON2.label, beacon.label);
+      expect(beacon.center, isNotNull);
+    } catch (err) {
+      expect(err, isNull);
+    }
+    // Create the third beacon
+    try {
+      var beacon = await _persistence.create(null, BEACON3);
+      expect(beacon, isNotNull);
+      expect(BEACON3.udi, beacon.udi);
+      expect(BEACON3.site_id, beacon.site_id);
+      expect(BEACON3.type, beacon.type);
+      expect(BEACON3.label, beacon.label);
+      expect(beacon.center, isNotNull);
+    } catch (err) {
+      expect(err, isNull);
+    }
+  }
 
-//                         assert.isObject(beacon);
-//                         assert.equal(BEACON2.udi, beacon.udi);
-//                         assert.equal(BEACON2.site_id, beacon.site_id);
-//                         assert.equal(BEACON2.type, beacon.type);
-//                         assert.equal(BEACON2.label, beacon.label);
-//                         assert.isNotNull(beacon.center);
+  void testCrudOperations() async {
+    BeaconV1 beacon1;
 
-//                         callback();
-//                     }
-//                 );
-//             },
-//             // Create the third beacon
-//             (callback) => {
-//                 this._persistence.create(
-//                     null,
-//                     BEACON3,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
+    // Create items
 
-//                         assert.isObject(beacon);
-//                         assert.equal(BEACON3.udi, beacon.udi);
-//                         assert.equal(BEACON3.site_id, beacon.site_id);
-//                         assert.equal(BEACON3.type, beacon.type);
-//                         assert.equal(BEACON3.label, beacon.label);
-//                         assert.isNotNull(beacon.center);
+    await _testCreateBeacons();
 
-//                         callback();
-//                     }
-//                 );
-//             }
-//         ], done);
-//     }
+    // Get all beacons
+    try {
+      var page = await _persistence.getPageByFilter(
+          null, FilterParams(), PagingParams());
+      expect(page, isNotNull);
+      expect(page.data.length, 3);
 
-//     public testCrudOperations(done) {
-//         let beacon1: BeaconV1;
+      beacon1 = page.data[0];
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//         async.series([
-//             // Create items
-//             (callback) => {
-//                 this.testCreateBeacons(callback);
-//             },
-//             // Get all beacons
-//             (callback) => {
-//                 this._persistence.getPageByFilter(
-//                     null,
-//                     new FilterParams(),
-//                     new PagingParams(),
-//                     (err, page) => {
-//                         assert.isNull(err);
+    // Update the beacon
 
-//                         assert.isObject(page);
-//                         assert.lengthOf(page.data, 3);
+    beacon1.label = 'ABC';
+    try {
+      var beacon = await _persistence.update(null, beacon1);
+      expect(beacon, isNotNull);
+      expect(beacon1.id, beacon.id);
+      expect('ABC', beacon.label);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                         beacon1 = page.data[0];
+    // Get beacon by udi
+    try {
+      var beacon = await _persistence.getOneByUdi(null, beacon1.udi);
+      expect(beacon, isNotNull);
+      expect(beacon1.id, beacon.id);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Update the beacon
-//             (callback) => {
-//                 beacon1.label = 'ABC';
+    // Delete the beacon
+    try {
+      var beacon = await _persistence.deleteById(null, beacon1.id);
+      expect(beacon, isNotNull);
+      expect(beacon1.id, beacon.id);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                 this._persistence.update(
-//                     null,
-//                     beacon1,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
+    // Try to get deleted beacon
+    try {
+      var beacon = await _persistence.getOneById(null, beacon1.id);
+      expect(beacon, isNull);
+    } catch (err) {
+      expect(err, isNull);
+    }
+  }
 
-//                         assert.isObject(beacon);
-//                         assert.equal(beacon1.id, beacon.id);
-//                         assert.equal('ABC', beacon.label);
+  void testGetWithFilters() async {
+    // Create items
 
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Get beacon by udi
-//             (callback) => {
-//                 this._persistence.getOneByUdi(
-//                     null, 
-//                     beacon1.udi,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
+    await _testCreateBeacons();
 
-//                         assert.isObject(beacon);
-//                         assert.equal(beacon1.id, beacon.id);
+    // Filter by id
+    try {
+      var page = await _persistence.getPageByFilter(
+          null, FilterParams.fromTuples(['id', '1']), PagingParams());
+      expect(page.data.length, 1);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Delete the beacon
-//             (callback) => {
-//                 this._persistence.deleteById(
-//                     null,
-//                     beacon1.id,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
+    // Filter by udi
+    try {
+      var page = await _persistence.getPageByFilter(
+          null, FilterParams.fromTuples(['udi', '00002']), PagingParams());
+      expect(page.data.length, 1);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                         assert.isObject(beacon);
-//                         assert.equal(beacon1.id, beacon.id);
+    // Filter by udis
+    try {
+      var page = await _persistence.getPageByFilter(null,
+          FilterParams.fromTuples(['udis', '00001,00003']), PagingParams());
+      expect(page.data.length, 2);
+    } catch (err) {
+      expect(err, isNull);
+    }
 
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Try to get deleted beacon
-//             (callback) => {
-//                 this._persistence.getOneById(
-//                     null,
-//                     beacon1.id,
-//                     (err, beacon) => {
-//                         assert.isNull(err);
-
-//                         assert.isNull(beacon || null);
-
-//                         callback();
-//                     }
-//                 )
-//             }
-//         ], done);
-//     }
-
-//     public testGetWithFilters(done) {
-//         async.series([
-//             // Create items
-//             (callback) => {
-//                 this.testCreateBeacons(callback);
-//             },
-//             // Filter by id
-//             (callback) => {
-//                 this._persistence.getPageByFilter(
-//                     null,
-//                     FilterParams.fromTuples(
-//                         'id', '1'
-//                     ),
-//                     new PagingParams(),
-//                     (err, page) => {
-//                         assert.isNull(err);
-
-//                         assert.lengthOf(page.data, 1);
-
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Filter by udi
-//             (callback) => {
-//                 this._persistence.getPageByFilter(
-//                     null,
-//                     FilterParams.fromTuples(
-//                         'udi', '00002'
-//                     ),
-//                     new PagingParams(),
-//                     (err, page) => {
-//                         assert.isNull(err);
-
-//                         assert.lengthOf(page.data, 1);
-
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Filter by udis
-//             (callback) => {
-//                 this._persistence.getPageByFilter(
-//                     null,
-//                     FilterParams.fromTuples(
-//                         'udis', '00001,00003'
-//                     ),
-//                     new PagingParams(),
-//                     (err, page) => {
-//                         assert.isNull(err);
-
-//                         assert.lengthOf(page.data, 2);
-
-//                         callback();
-//                     }
-//                 )
-//             },
-//             // Filter by site_id
-//             (callback) => {
-//                 this._persistence.getPageByFilter(
-//                     null,
-//                     FilterParams.fromTuples(
-//                         'site_id', '1'
-//                     ),
-//                     new PagingParams(),
-//                     (err, page) => {
-//                         assert.isNull(err);
-
-//                         assert.lengthOf(page.data, 2);
-
-//                         callback();
-//                     }
-//                 )
-//             },
-//         ], done);
-//     }
-// }
+    // Filter by site_id
+    try {
+      var page = await _persistence.getPageByFilter(
+          null, FilterParams.fromTuples(['site_id', '1']), PagingParams());
+      expect(page.data.length, 2);
+    } catch (err) {
+      expect(err, isNull);
+    }
+  }
+}

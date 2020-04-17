@@ -11,7 +11,7 @@ class BeaconsMemoryPersistence
     maxPageSize = 1000;
   }
 
-  dynamic composeFilter(FilterParams filter) {
+  Function composeFilter(FilterParams filter) {
     filter = filter ?? FilterParams();
 
     var id = filter.getAsNullableString('id');
@@ -19,10 +19,14 @@ class BeaconsMemoryPersistence
     var label = filter.getAsNullableString('label');
     var udi = filter.getAsNullableString('udi');
     var udis = filter.getAsObject('udis');
-    if (udis is String) {
+    if (udis != null && udis is String) {
+      // cut [] and spaces? if string is list
+      udis = udis.replaceAll('[', '');
+      udis = udis.replaceAll(']', '');
+      udis = udis.replaceAll(' ', '');
       udis = (udis as String).split(',');
     }
-    if (!udis is List) {
+    if (udis != null && !(udis is List)) {
       udis = null;
     }
 
