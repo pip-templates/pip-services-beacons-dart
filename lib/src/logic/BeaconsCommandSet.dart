@@ -1,119 +1,112 @@
-// import { CommandSet, FilterParams, PagingParams } from 'pip-services3-commons-node';
-// import { ICommand } from 'pip-services3-commons-node';
-// import { Command } from 'pip-services3-commons-node';
-// import { ObjectSchema } from 'pip-services3-commons-node';
-// import { FilterParamsSchema } from 'pip-services3-commons-node';
-// import { PagingParamsSchema } from 'pip-services3-commons-node';
-// import { ArraySchema } from 'pip-services3-commons-node';
-// import { TypeCode } from 'pip-services3-commons-node';
-// import { Parameters } from 'pip-services3-commons-node';
 
-// import { BeaconV1Schema } from '../../src/data/version1/BeaconV1Schema';
-// import { IBeaconsController } from '../../src/logic/IBeaconsController';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// export class BeaconsCommandSet extends CommandSet {
-//     private _controller: IBeaconsController;
+import '../../src/data/version1/BeaconV1Schema.dart';
+import '../../src/logic/IBeaconsController.dart';
+import '../../src/data/version1/BeaconV1.dart';
 
-//     constructor(controller: IBeaconsController) {
-//         super();
+class BeaconsCommandSet extends CommandSet {
+    IBeaconsController _controller;
 
-//         this._controller = controller;
+    BeaconsCommandSet(IBeaconsController controller):super() {
+      
+        _controller = controller;
 
-//         this.addCommand(this.makeGetBeaconsCommand());
-//         this.addCommand(this.makeGetBeaconByIdCommand());
-//         this.addCommand(this.makeGetBeaconByUdiCommand());
-//         this.addCommand(this.makeCalculatePositionCommand());
-//         this.addCommand(this.makeCreateBeaconCommand());
-//         this.addCommand(this.makeUpdateBeaconCommand());
-//         this.addCommand(this.makeDeleteBeaconByIdCommand());
-//     }
+        addCommand(_makeGetBeaconsCommand());
+        addCommand(_makeGetBeaconByIdCommand());
+        addCommand(_makeGetBeaconByUdiCommand());
+        addCommand(_makeCalculatePositionCommand());
+        addCommand(_makeCreateBeaconCommand());
+        addCommand(_makeUpdateBeaconCommand());
+        addCommand(_makeDeleteBeaconByIdCommand());
+    }
 
-//     private makeGetBeaconsCommand(): ICommand {
-//         return new Command(
-//             'get_beacons',
-//             new ObjectSchema(true)
-//                 .withOptionalProperty('filter', new FilterParamsSchema())
-//                 .withOptionalProperty('paging', new PagingParamsSchema()),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let filter = FilterParams.fromValue(args.get('filter'));
-//                 let paging = PagingParams.fromValue(args.get('paging'));
-//                 this._controller.getBeacons(correlationId, filter, paging, callback);
-//             }
-//         );
-//     }
+    ICommand _makeGetBeaconsCommand() {
+        return Command(
+            'get_beacons',
+            ObjectSchema(true)
+                .withOptionalProperty('filter', FilterParamsSchema())
+                .withOptionalProperty('paging', PagingParamsSchema()),
+            (String correlationId, Parameters args) {
+                var filter = FilterParams.fromValue(args.get('filter'));
+                var paging = PagingParams.fromValue(args.get('paging'));
+                return _controller.getBeacons(correlationId, filter, paging);
+            }
+        );
+    }
 
-//     private makeGetBeaconByIdCommand(): ICommand {
-//         return new Command(
-//             'get_beacon_by_id',
-//             new ObjectSchema(true)
-//                 .withRequiredProperty('beacon_id', TypeCode.String),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let beaconId = args.getAsString('beacon_id');
-//                 this._controller.getBeaconById(correlationId, beaconId, callback);
-//             }
-//         );
-//     }
+    ICommand _makeGetBeaconByIdCommand() {
+        return Command(
+            'get_beacon_by_id',
+            ObjectSchema(true)
+                .withRequiredProperty('beacon_id', TypeCode.String),
+            (String correlationId, Parameters args) {
+                var beaconId = args.getAsString('beacon_id');
+                return _controller.getBeaconById(correlationId, beaconId);
+            }
+        );
+    }
 
-//     private makeGetBeaconByUdiCommand(): ICommand {
-//         return new Command(
-//             'get_beacon_by_udi',
-//             new ObjectSchema(true)
-//                 .withRequiredProperty('udi', TypeCode.String),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let udi = args.getAsString('udi');
-//                 this._controller.getBeaconByUdi(correlationId, udi, callback);
-//             }
-//         );
-//     }
+    ICommand _makeGetBeaconByUdiCommand() {
+        return Command(
+            'get_beacon_by_udi',
+            ObjectSchema(true)
+                .withRequiredProperty('udi', TypeCode.String),
+            (String correlationId, Parameters args) {
+                var udi = args.getAsString('udi');
+                return _controller.getBeaconByUdi(correlationId, udi);
+            }
+        );
+    }
 
-//     private makeCalculatePositionCommand(): ICommand {
-//         return new Command(
-//             'calculate_position',
-//             new ObjectSchema(true)
-//                 .withRequiredProperty('site_id', TypeCode.String)
-//                 .withRequiredProperty('udis', new ArraySchema(TypeCode.String)),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let siteId = args.getAsString('site_id');
-//                 let udis = args.getAsObject('udis');
-//                 this._controller.calculatePosition(correlationId, siteId, udis, callback);
-//             }
-//         );
-//     }
+    ICommand _makeCalculatePositionCommand() {
+        return Command(
+            'calculate_position',
+            ObjectSchema(true)
+                .withRequiredProperty('site_id', TypeCode.String)
+                .withRequiredProperty('udis', ArraySchema(TypeCode.String)),
+            (String correlationId, Parameters args) {
+                var siteId = args.getAsString('site_id');
+                var udis = args.getAsObject('udis');
+                return _controller.calculatePosition(correlationId, siteId, udis);
+            }
+        );
+    }
 
-//     private makeCreateBeaconCommand(): ICommand {
-//         return new Command(
-//             'create_beacon',
-//             new ObjectSchema(true)
-//                 .withRequiredProperty('beacon', new BeaconV1Schema()),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let beacon = args.getAsObject('beacon');
-//                 this._controller.createBeacon(correlationId, beacon, callback);
-//             }
-//         );
-//     }   
+    ICommand _makeCreateBeaconCommand() {
+        return Command(
+            'create_beacon',
+            ObjectSchema(true)
+                .withRequiredProperty('beacon', BeaconV1Schema()),
+            (String correlationId, Parameters args) {
+                var beacon = BeaconV1.fromJson(args.get('beacon'));
+                return _controller.createBeacon(correlationId, beacon);
+            }
+        );
+    }   
 
-//     private makeUpdateBeaconCommand(): ICommand {
-//         return new Command(
-//             'update_beacon',
-//             new ObjectSchema(true)
-//                 .withRequiredProperty('beacon', new BeaconV1Schema()),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let beacon = args.getAsObject('beacon');
-//                 this._controller.updateBeacon(correlationId, beacon, callback);
-//             }
-//         );
-//     }   
+    ICommand _makeUpdateBeaconCommand() {
+        return Command(
+            'update_beacon',
+            ObjectSchema(true)
+                .withRequiredProperty('beacon', BeaconV1Schema()),
+            (String correlationId, Parameters args) {
+                 var beacon = BeaconV1.fromJson(args.get('beacon'));
+                return _controller.updateBeacon(correlationId, beacon);
+            }
+        );
+    }   
     
-//     private makeDeleteBeaconByIdCommand(): ICommand {
-//         return new Command(
-//             'delete_beacon_by_id',
-//             new ObjectSchema(true)
-//                 .withRequiredProperty('beacon_id', TypeCode.String),
-//             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-//                 let beaconId = args.getAsString('beacon_id');
-//                 this._controller.deleteBeaconById(correlationId, beaconId, callback);
-//             }
-//         );
-//     }
+    ICommand _makeDeleteBeaconByIdCommand() {
+        return Command(
+            'delete_beacon_by_id',
+            ObjectSchema(true)
+                .withRequiredProperty('beacon_id', TypeCode.String),
+            (String correlationId, Parameters args) {
+                var beaconId = args.getAsString('beacon_id');
+                return _controller.deleteBeaconById(correlationId, beaconId);
+            }
+        );
+    }
 
-// }
+}

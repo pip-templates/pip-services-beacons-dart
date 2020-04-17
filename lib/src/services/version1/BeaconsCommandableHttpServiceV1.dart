@@ -1,9 +1,9 @@
-// import { CommandableHttpService } from 'pip-services3-rpc-node';
-// import { Descriptor } from 'pip-services3-commons-node';
+import 'package:pip_services3_rpc/pip_services3_rpc.dart';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// export class BeaconsCommandableHttpServiceV1 extends CommandableHttpService {
-//     public constructor() {
-//         super('v1/beacons');
-//         this._dependencyResolver.put('controller', new Descriptor('beacons', 'controller', '*', '*', '1.0'));
-//     }
-// }
+class BeaconsCommandableHttpServiceV1 extends CommandableHttpService {
+  BeaconsCommandableHttpServiceV1() : super('v1/beacons') {
+    dependencyResolver.put(
+        'controller', Descriptor('beacons', 'controller', '*', '*', '1.0'));
+  }
+}

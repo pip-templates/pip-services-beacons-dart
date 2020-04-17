@@ -1,28 +1,25 @@
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
+import 'dart:async';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// import { BeaconV1 } from '../../../src/data/version1/BeaconV1';
+import '../../../src/data/version1/BeaconV1.dart';
 
-// export interface IBeaconsClientV1 {
-//     getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void;
+abstract class IBeaconsClientV1 {
+  Future<DataPage<BeaconV1>> getBeacons(
+      String correlationId, FilterParams filter, PagingParams paging);
 
-//     getBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> getBeaconById(String correlationId, String beaconId);
 
-//     getBeaconByUdi(correlationId: string, udi: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> getBeaconByUdi(String correlationId, String udi);
 
-//     calculatePosition(correlationId: string, siteId: string, udis: string[], 
-//         callback: (err: any, position: any) => void): void;
+  Future<Map<String, dynamic>> calculatePosition(
+      String correlationId, String siteId, List<String> udis);
 
-//     createBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> createBeacon(String correlationId, BeaconV1 beacon);
 
-//     updateBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> updateBeacon(
+    String correlationId,
+    BeaconV1 beacon,
+  );
 
-//     deleteBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void;            
-// }
+  Future<BeaconV1> deleteBeaconById(String correlationId, String beaconId);
+}

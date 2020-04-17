@@ -1,28 +1,21 @@
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
+import 'dart:async';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import '../../src/data/version1/BeaconV1.dart';
 
-// import { BeaconV1 } from '../../src/data/version1/BeaconV1';
+abstract class IBeaconsController {
+  Future<DataPage<BeaconV1>> getBeacons(
+      String correlationId, FilterParams filter, PagingParams paging);
 
-// export interface IBeaconsController {
-//     getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void;
+  Future<BeaconV1> getBeaconById(String correlationId, String beaconId);
 
-//     getBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, page: BeaconV1) => void): void;
+  Future<BeaconV1> getBeaconByUdi(String correlationId, String beaconId);
 
-//     getBeaconByUdi(correlationId: string, beaconId: string,
-//         callback: (err: any, page: BeaconV1) => void): void;
+  Future<Map<String, dynamic>> calculatePosition(
+      String correlationId, String siteId, List<String> udis);
 
-//     calculatePosition(correlationId: string, siteId: string, udis: string[],
-//         callback: (err: any, position: any) => void): void;
+  Future<BeaconV1> createBeacon(String correlationId, BeaconV1 beacon);
 
-//     createBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> updateBeacon(String correlationId, BeaconV1 beacon);
 
-//     updateBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
-
-//     deleteBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void;
-// }
+  Future<BeaconV1> deleteBeaconById(String correlationId, String beaconId);
+}

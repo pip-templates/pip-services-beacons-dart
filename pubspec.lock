@@ -372,6 +372,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  pip_services3_rpc:
+    dependency: "direct main"
+    description:
+      name: pip_services3_rpc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   pool:
     dependency: transitive
     description:
