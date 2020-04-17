@@ -1,44 +1,44 @@
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
+import 'dart:async';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// import { BeaconV1 } from '../../../src/data/version1/BeaconV1';
-// import { IBeaconsClientV1 } from './IBeaconsClientV1';
+import '../../../src/data/version1/BeaconV1.dart';
+import './IBeaconsClientV1.dart';
 
-// export class BeaconsNullClientV1 implements IBeaconsClientV1 {
-//     getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void {
-//         callback(null, new DataPage([], 0));
-//     }
+class BeaconsNullClientV1 implements IBeaconsClientV1 {
+  @override
+  Future<DataPage<BeaconV1>> getBeacons(
+      String correlationId, FilterParams filter, PagingParams paging) async {
+    return DataPage<BeaconV1>([], 0);
+  }
 
-//     public getBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         callback(null, null);
-//     }
+  @override
+  Future<BeaconV1> getBeaconById(String correlationId, String beaconId) async {
+    return null;
+  }
 
-//     public getBeaconByUdi(correlationId: string, udi: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         callback(null, null);
-//     }
+  @override
+  Future<BeaconV1> getBeaconByUdi(String correlationId, String udi) async {
+    return null;
+  }
 
-//     public calculatePosition(correlationId: string, siteId: string, udis: string[], 
-//         callback: (err: any, position: any) => void): void {
-//         callback(null, null);
-//     }
+  @override
+  Future<Map<String, dynamic>> calculatePosition(
+      String correlationId, String siteId, List<String> udis) async {
+    return null;
+  }
 
-//     public createBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         callback(null, null);
-//     }
+  @override
+  Future<BeaconV1> createBeacon(String correlationId, BeaconV1 beacon) {
+    return null;
+  }
 
-//     public updateBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         callback(null, null);
-//     }
+  @override
+  Future<BeaconV1> updateBeacon(String correlationId, BeaconV1 beacon) {
+    return null;
+  }
 
-//     public deleteBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         callback(null, null);
-//     }
-
-// }
+  @override
+  Future<BeaconV1> deleteBeaconById(String correlationId, String beaconId) {
+    return null;
+  }
+}
