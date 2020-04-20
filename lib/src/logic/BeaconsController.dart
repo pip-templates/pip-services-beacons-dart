@@ -51,7 +51,6 @@ class BeaconsController
       String correlationId, String siteId, List<String> udis) async {
     var beacons = <BeaconV1>[];
     var position = <String, dynamic>{};
-
     if (udis == null || udis.isEmpty) {
       return null;
     }
@@ -83,6 +82,7 @@ class BeaconsController
     }
 
     return null;
+
   }
 
   @override
