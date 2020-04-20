@@ -3,7 +3,6 @@ import 'package:pip_services3_commons/pip_services3_commons.dart';
 
 import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
 
-
 final BEACON1 = BeaconV1.from(
     '1', //id:
     '00001', //udi:
@@ -51,101 +50,69 @@ class BeaconsPersistenceFixture {
 
   void _testCreateBeacons() async {
     // Create the first beacon
-    try {
-      var beacon = await _persistence.create(null, BEACON1);
+    var beacon = await _persistence.create(null, BEACON1);
 
-      expect(beacon, isNotNull);
-      expect(BEACON1.udi, beacon.udi);
-      expect(BEACON1.site_id, beacon.site_id);
-      expect(BEACON1.type, beacon.type);
-      expect(BEACON1.label, beacon.label);
-      expect(beacon.center, isNotNull);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    expect(beacon, isNotNull);
+    expect(BEACON1.udi, beacon.udi);
+    expect(BEACON1.site_id, beacon.site_id);
+    expect(BEACON1.type, beacon.type);
+    expect(BEACON1.label, beacon.label);
+    expect(beacon.center, isNotNull);
 
     // Create the second beacon
-    try {
-      var beacon = await _persistence.create(null, BEACON2);
-      expect(beacon, isNotNull);
-      expect(BEACON2.udi, beacon.udi);
-      expect(BEACON2.site_id, beacon.site_id);
-      expect(BEACON2.type, beacon.type);
-      expect(BEACON2.label, beacon.label);
-      expect(beacon.center, isNotNull);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    beacon = await _persistence.create(null, BEACON2);
+    expect(beacon, isNotNull);
+    expect(BEACON2.udi, beacon.udi);
+    expect(BEACON2.site_id, beacon.site_id);
+    expect(BEACON2.type, beacon.type);
+    expect(BEACON2.label, beacon.label);
+    expect(beacon.center, isNotNull);
+
     // Create the third beacon
-    try {
-      var beacon = await _persistence.create(null, BEACON3);
-      expect(beacon, isNotNull);
-      expect(BEACON3.udi, beacon.udi);
-      expect(BEACON3.site_id, beacon.site_id);
-      expect(BEACON3.type, beacon.type);
-      expect(BEACON3.label, beacon.label);
-      expect(beacon.center, isNotNull);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    beacon = await _persistence.create(null, BEACON3);
+    expect(beacon, isNotNull);
+    expect(BEACON3.udi, beacon.udi);
+    expect(BEACON3.site_id, beacon.site_id);
+    expect(BEACON3.type, beacon.type);
+    expect(BEACON3.label, beacon.label);
+    expect(beacon.center, isNotNull);
   }
 
   void testCrudOperations() async {
     BeaconV1 beacon1;
 
     // Create items
-
     await _testCreateBeacons();
 
     // Get all beacons
-    try {
-      var page = await _persistence.getPageByFilter(
-          null, FilterParams(), PagingParams());
-      expect(page, isNotNull);
-      expect(page.data.length, 3);
+    var page = await _persistence.getPageByFilter(
+        null, FilterParams(), PagingParams());
+    expect(page, isNotNull);
+    expect(page.data.length, 3);
 
-      beacon1 = page.data[0];
-    } catch (err) {
-      expect(err, isNull);
-    }
+    beacon1 = page.data[0];
 
     // Update the beacon
-
     beacon1.label = 'ABC';
-    try {
-      var beacon = await _persistence.update(null, beacon1);
-      expect(beacon, isNotNull);
-      expect(beacon1.id, beacon.id);
-      expect('ABC', beacon.label);
-    } catch (err) {
-      expect(err, isNull);
-    }
+
+    var beacon = await _persistence.update(null, beacon1);
+    expect(beacon, isNotNull);
+    expect(beacon1.id, beacon.id);
+    expect('ABC', beacon.label);
 
     // Get beacon by udi
-    try {
-      var beacon = await _persistence.getOneByUdi(null, beacon1.udi);
-      expect(beacon, isNotNull);
-      expect(beacon1.id, beacon.id);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    beacon = await _persistence.getOneByUdi(null, beacon1.udi);
+    expect(beacon, isNotNull);
+    expect(beacon1.id, beacon.id);
 
     // Delete the beacon
-    try {
-      var beacon = await _persistence.deleteById(null, beacon1.id);
-      expect(beacon, isNotNull);
-      expect(beacon1.id, beacon.id);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    beacon = await _persistence.deleteById(null, beacon1.id);
+    expect(beacon, isNotNull);
+    expect(beacon1.id, beacon.id);
 
     // Try to get deleted beacon
-    try {
-      var beacon = await _persistence.getOneById(null, beacon1.id);
-      expect(beacon, isNull);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    beacon = await _persistence.getOneById(null, beacon1.id);
+    expect(beacon, isNull);
   }
 
   void testGetWithFilters() async {
@@ -154,39 +121,23 @@ class BeaconsPersistenceFixture {
     await _testCreateBeacons();
 
     // Filter by id
-    try {
-      var page = await _persistence.getPageByFilter(
-          null, FilterParams.fromTuples(['id', '1']), PagingParams());
-      expect(page.data.length, 1);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    var page = await _persistence.getPageByFilter(
+        null, FilterParams.fromTuples(['id', '1']), PagingParams());
+    expect(page.data.length, 1);
 
     // Filter by udi
-    try {
-      var page = await _persistence.getPageByFilter(
-          null, FilterParams.fromTuples(['udi', '00002']), PagingParams());
-      expect(page.data.length, 1);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    page = await _persistence.getPageByFilter(
+        null, FilterParams.fromTuples(['udi', '00002']), PagingParams());
+    expect(page.data.length, 1);
 
     // Filter by udis
-    try {
-      var page = await _persistence.getPageByFilter(null,
-          FilterParams.fromTuples(['udis', '00001,00003']), PagingParams());
-      expect(page.data.length, 2);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    page = await _persistence.getPageByFilter(
+        null, FilterParams.fromTuples(['udis', '00001,00003']), PagingParams());
+    expect(page.data.length, 2);
 
     // Filter by site_id
-    try {
-      var page = await _persistence.getPageByFilter(
-          null, FilterParams.fromTuples(['site_id', '1']), PagingParams());
-      expect(page.data.length, 2);
-    } catch (err) {
-      expect(err, isNull);
-    }
+    page = await _persistence.getPageByFilter(
+        null, FilterParams.fromTuples(['site_id', '1']), PagingParams());
+    expect(page.data.length, 2);
   }
 }

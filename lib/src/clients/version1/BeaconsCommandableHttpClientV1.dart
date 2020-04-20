@@ -22,7 +22,7 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
       {'filter': filter, 'paging': paging},
     );
     return DataPage<BeaconV1>.fromJson(
-        result, (item) => BeaconV1.fromJson(item));
+        result, (item) => BeaconV1().fromJson(item));
   }
 
   @override
@@ -30,7 +30,9 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
     var result = await callCommand(
         'get_beacon_by_id', correlationId, {'beacon_id': beaconId});
     if (result == null) return null;
-    return BeaconV1.fromJson(json.decode(result));
+    var item = BeaconV1();
+    item.fromJson(json.decode(result));
+    return item;
   }
 
   @override
@@ -38,7 +40,9 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
     var result =
         await callCommand('get_beacon_by_udi', correlationId, {udi: udi});
     if (result == null) return null;
-    return BeaconV1.fromJson(json.decode(result));
+    var item = BeaconV1();
+    item.fromJson(json.decode(result));
+    return item;
   }
 
   @override
@@ -53,7 +57,9 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
     var result =
         await callCommand('create_beacon', correlationId, {'beacon': beacon});
     if (result == null) return null;
-    return BeaconV1.fromJson(json.decode(result));
+    var item = BeaconV1();
+    item.fromJson(json.decode(result));
+    return item;
   }
 
   @override
@@ -61,7 +67,9 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
     var result =
         await callCommand('update_beacon', correlationId, {beacon: beacon});
     if (result == null) return null;
-    return BeaconV1.fromJson(json.decode(result));
+    var item = BeaconV1();
+    item.fromJson(json.decode(result));
+    return item;
   }
 
   @override
@@ -70,6 +78,8 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
     var result = await callCommand(
         'delete_beacon_by_id', correlationId, {'beacon_id': beaconId});
     if (result == null) return null;
-    return BeaconV1.fromJson(json.decode(result));
+    var item = BeaconV1();
+    item.fromJson(json.decode(result));
+    return item;
   }
 }

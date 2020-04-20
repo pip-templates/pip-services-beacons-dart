@@ -4,7 +4,6 @@ import 'package:pip_services3_commons/pip_services3_commons.dart';
 import '../persistence/BeaconsMemoryPersistence.dart';
 import '../persistence/BeaconsFilePersistence.dart';
 import '../persistence/BeaconsMongoDbPersistence.dart';
-//import '../persistence/BeaconsCouchbasePersistence.dart';
 import '../logic/BeaconsController.dart';
 import '../services/version1/BeaconsCommandableHttpServiceV1.dart';
 //import '../services/version1/BeaconsCommandableGrpcServiceV1.dart';
@@ -35,7 +34,6 @@ class BeaconsServiceFactory extends Factory {
         BeaconsFilePersistence);
     registerAsType(BeaconsServiceFactory.MongoDbPersistenceDescriptor,
         BeaconsMongoDbPersistence);
-    //registerAsType(BeaconsServiceFactory.CouchbasePersistenceDescriptor, BeaconsCouchbasePersistence);
     registerAsType(
         BeaconsServiceFactory.ControllerDescriptor, BeaconsController);
     registerAsType(BeaconsServiceFactory.CommandableHttpServiceV1Descriptor,

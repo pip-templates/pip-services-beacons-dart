@@ -75,7 +75,8 @@ class BeaconsCommandSet extends CommandSet {
     return Command('create_beacon',
         ObjectSchema(true).withRequiredProperty('beacon', BeaconV1Schema()),
         (String correlationId, Parameters args) {
-      var beacon = BeaconV1.fromJson(args.get('beacon'));
+      var beacon = BeaconV1();
+      beacon.fromJson(args.get('beacon'));
       return _controller.createBeacon(correlationId, beacon);
     });
   }
@@ -84,7 +85,8 @@ class BeaconsCommandSet extends CommandSet {
     return Command('update_beacon',
         ObjectSchema(true).withRequiredProperty('beacon', BeaconV1Schema()),
         (String correlationId, Parameters args) {
-      var beacon = BeaconV1.fromJson(args.get('beacon'));
+      var beacon = BeaconV1();
+      beacon.fromJson(args.get('beacon'));
       return _controller.updateBeacon(correlationId, beacon);
     });
   }

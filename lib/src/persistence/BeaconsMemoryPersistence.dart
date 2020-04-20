@@ -20,10 +20,6 @@ class BeaconsMemoryPersistence
     var udi = filter.getAsNullableString('udi');
     var udis = filter.getAsObject('udis');
     if (udis != null && udis is String) {
-      // cut [] and spaces? if string is list
-      udis = udis.replaceAll('[', '');
-      udis = udis.replaceAll(']', '');
-      udis = udis.replaceAll(' ', '');
       udis = (udis as String).split(',');
     }
     if (udis != null && !(udis is List)) {

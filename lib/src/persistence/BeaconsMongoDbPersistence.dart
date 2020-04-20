@@ -63,7 +63,9 @@ class BeaconsMongoDbPersistence
     var filter = {'udi': udi};
     var query = mngquery.SelectorBuilder();
     var selector = <String, dynamic>{};
-    selector[r'$query'] = filter;
+    if (filter != null && filter.isNotEmpty) {
+      selector[r'$query'] = filter;
+    }
     query.raw(selector);
 
     var item = await collection.findOne(filter);
@@ -75,7 +77,6 @@ class BeaconsMongoDbPersistence
     }
     logger.trace(
         correlationId, 'Retrieved from %s with id = %s', [collectionName, udi]);
-    item = convertToPublic(item);
-    return BeaconV1.fromJson(item);
+    return convertToPublic(item);
   }
 }

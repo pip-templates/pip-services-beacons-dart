@@ -350,7 +350,7 @@ packages:
       name: pip_services3_commons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   pip_services3_components:
     dependency: "direct main"
     description:
@@ -378,7 +378,7 @@ packages:
       name: pip_services3_mongodb
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   pip_services3_rpc:
     dependency: "direct main"
     description:

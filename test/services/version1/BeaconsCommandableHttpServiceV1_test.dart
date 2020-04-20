@@ -88,7 +88,8 @@ void main() {
         var resp = await rest.post(url + '/v1/beacons/create_beacon',
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'beacon': BEACON1}));
-        var beacon = BeaconV1.fromJson(json.decode(resp.body.toString()));
+        var beacon = BeaconV1();
+        beacon.fromJson(json.decode(resp.body.toString()));
         expect(beacon, isNotNull);
         expect(BEACON1.udi, beacon.udi);
         expect(BEACON1.site_id, beacon.site_id);
@@ -104,7 +105,8 @@ void main() {
         var resp = await rest.post(url + '/v1/beacons/create_beacon',
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'beacon': BEACON2}));
-        var beacon = BeaconV1.fromJson(json.decode(resp.body.toString()));
+        var beacon = BeaconV1();
+        beacon.fromJson(json.decode(resp.body.toString()));
         expect(beacon, isNotNull);
         expect(BEACON2.udi, beacon.udi);
         expect(BEACON2.site_id, beacon.site_id);
@@ -123,7 +125,7 @@ void main() {
                 .encode({'filter': FilterParams(), 'paging': PagingParams()}));
         var page = DataPage<BeaconV1>.fromJson(
             json.decode(resp.body.toString()),
-            (item) => BeaconV1.fromJson(item));
+            (item) => BeaconV1().fromJson(item));
         expect(page, isNotNull);
         expect(page.data.length, 2);
 
@@ -139,7 +141,8 @@ void main() {
         var resp = await rest.post(url +'/v1/beacons/update_beacon',
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'beacon': beacon1}));
-        var beacon = BeaconV1.fromJson(json.decode(resp.body.toString()));
+        var beacon = BeaconV1();
+        beacon.fromJson(json.decode(resp.body.toString()));
         expect(beacon, isNotNull);
         expect(beacon1.id, beacon.id);
         expect('ABC', beacon.label);
@@ -152,7 +155,8 @@ void main() {
         var resp = await rest.post(url +'/v1/beacons/get_beacon_by_udi',
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'udi': beacon1.udi}));
-        var beacon = BeaconV1.fromJson(json.decode(resp.body.toString()));
+        var beacon = BeaconV1();
+        beacon.fromJson(json.decode(resp.body.toString()));
         expect(beacon, isNotNull);
         expect(beacon1.id, beacon.id);
       } catch (err) {
@@ -183,11 +187,12 @@ void main() {
         var resp = await rest.post(url +'/v1/beacons/delete_beacon_by_id',
             headers: {'Content-Type': 'application/json'},
             body: json.encode({'beacon_id': beacon1.id}));
-        var beacon = BeaconV1.fromJson(json.decode(resp.body.toString()));
+        var beacon = BeaconV1();
+        beacon.fromJson(json.decode(resp.body.toString()));
         expect(beacon, isNotNull);
         expect(beacon1.id, beacon.id);
       } catch (err) {
-        expect(err, isNull);
+        expect(err, isNull); 
       }
 
       // Try to get deleted beacon

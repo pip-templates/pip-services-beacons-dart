@@ -23,12 +23,12 @@ group('BeaconsMemoryPersistence', ()  {
         await persistence.close(null);
     });
 
-    test('CRUD Operations', ()  {
-        fixture.testCrudOperations();
+    test('CRUD Operations', () async {
+        await fixture.testCrudOperations();
     });
 
-    test('Get with Filters', ()  {
-        fixture.testGetWithFilters();
+    test('Get with Filters', () async {
+        await fixture.testGetWithFilters();
     });
 
 });
