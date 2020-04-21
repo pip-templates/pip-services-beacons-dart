@@ -13,12 +13,12 @@
 // import { BeaconsGrpcConverterV1 } from './BeaconsGrpcConverterV1';
 
 // export class BeaconsGrpcClientV1 extends GrpcClient implements IBeaconsClientV1 {
-    
+
 //     public constructor() {
 //         super(services.BeaconsClient);
 //     }
 
-//     public getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams, 
+//     public getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
 //         callback: (err: any, page: DataPage<BeaconV1>) => void): void {
 
 //         let request = new messages.BeaconsPageRequest();
@@ -28,7 +28,7 @@
 //         let timing = this.instrument(correlationId, 'beacons.get_beacons');
 
 //         this.call('get_beacons',
-//             correlationId, 
+//             correlationId,
 //             request,
 //             (err, response) => {
 //                 timing.endTiming();
@@ -36,7 +36,7 @@
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toBeaconsPage(response.getPage())
 //                     : null;
 
@@ -44,8 +44,8 @@
 //             }
 //         );
 //     }
-    
-//     public getBeaconById(correlationId: string, beaconId: string, 
+
+//     public getBeaconById(correlationId: string, beaconId: string,
 //         callback: (err: any, beacon: BeaconV1) => void): void {
 
 //         let request = new messages.BeaconIdRequest();
@@ -55,23 +55,23 @@
 
 //         this.call('get_beacon_by_id',
 //             correlationId,
-//             request, 
+//             request,
 //             (err, response) => {
 //                 timing.endTiming();
 
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toBeacon(response.getBeacon())
 //                     : null;
 
 //                 callback(err, result);
 //             }
-//         );        
+//         );
 //     }
-    
-//     public getBeaconByUdi(correlationId: string, udi: string, 
+
+//     public getBeaconByUdi(correlationId: string, udi: string,
 //         callback: (err: any, beacon: BeaconV1) => void): void {
 
 //         let request = new messages.BeaconUdiRequest();
@@ -81,22 +81,22 @@
 
 //         this.call('get_beacon_by_udi',
 //             correlationId,
-//             request, 
+//             request,
 //             (err, response) => {
 //                 timing.endTiming();
 
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toBeacon(response.getBeacon())
 //                     : null;
 
 //                 callback(err, result);
 //             }
-//         );        
+//         );
 //     }
-    
+
 //     public calculatePosition(correlationId: string, siteId: string, udis: string[],
 //         callback: (err: any, position: any) => void): void {
 
@@ -108,23 +108,23 @@
 
 //         this.call('calculate_position',
 //             correlationId,
-//             request, 
+//             request,
 //             (err, response) => {
 //                 timing.endTiming();
 
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toPoint(response.getPosition())
 //                     : null;
 
 //                 callback(err, result);
 //             }
-//         );        
+//         );
 //     }
-    
-//     public createBeacon(correlationId: string, beacon: BeaconV1, 
+
+//     public createBeacon(correlationId: string, beacon: BeaconV1,
 //         callback: (err: any, beacon: BeaconV1) => void): void {
 
 //         let request = new messages.BeaconRequest();
@@ -135,23 +135,23 @@
 
 //         this.call('create_beacon',
 //             correlationId,
-//             request, 
+//             request,
 //             (err, response) => {
 //                 timing.endTiming();
 
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toBeacon(response.getBeacon())
 //                     : null;
 
 //                 callback(err, result);
 //             }
-//         );        
+//         );
 //     }
-    
-//     public updateBeacon(correlationId: string, beacon: BeaconV1, 
+
+//     public updateBeacon(correlationId: string, beacon: BeaconV1,
 //         callback: (err: any, beacon: BeaconV1) => void): void {
 
 //         let request = new messages.BeaconRequest();
@@ -162,25 +162,25 @@
 
 //         this.call('update_beacon',
 //             correlationId,
-//             request, 
+//             request,
 //             (err, response) => {
 //                 timing.endTiming();
 
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toBeacon(response.getBeacon())
 //                     : null;
 
 //                 callback(err, result);
 //             }
-//         );        
+//         );
 //     }
-    
-//     public deleteBeaconById(correlationId: string, beaconId: string, 
+
+//     public deleteBeaconById(correlationId: string, beaconId: string,
 //         callback: (err: any, beacon: BeaconV1) => void): void {
-        
+
 //         let request = new messages.BeaconIdRequest();
 //         request.setBeaconId(beaconId);
 
@@ -188,20 +188,20 @@
 
 //         this.call('delete_beacon_by_id',
 //             correlationId,
-//             request, 
+//             request,
 //             (err, response) => {
 //                 timing.endTiming();
 
 //                 if (err == null && response.error != null)
 //                     err = BeaconsGrpcConverterV1.toError(response.error);
 
-//                 let result = response 
+//                 let result = response
 //                     ? BeaconsGrpcConverterV1.toBeacon(response.getBeacon())
 //                     : null;
 
 //                 callback(err, result);
 //             }
-//         );        
+//         );
 //     }
-  
+
 // }

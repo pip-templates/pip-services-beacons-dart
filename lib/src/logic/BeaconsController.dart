@@ -82,7 +82,6 @@ class BeaconsController
     }
 
     return null;
-
   }
 
   @override

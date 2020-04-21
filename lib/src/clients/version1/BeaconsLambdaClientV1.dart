@@ -7,7 +7,7 @@
 // import { IBeaconsClientV1 } from './IBeaconsClientV1';
 
 // export class BeaconsLambdaClientV1 extends CommandableLambdaClient implements IBeaconsClientV1 {
-    
+
 //     constructor(config?: any) {
 //         // Todo: 'v1/beacons' or just 'beacons' for lambda (like in SettingsLambdaClientV1.ts)?
 //         super('v1/beacons');
@@ -50,7 +50,7 @@
 //         );
 //     }
 
-//     public calculatePosition(correlationId: string, siteId: string, udis: string[], 
+//     public calculatePosition(correlationId: string, siteId: string, udis: string[],
 //         callback: (err: any, position: any) => void): void {
 //         this.callCommand(
 //             'calculate_position',
@@ -60,7 +60,7 @@
 //                 udis: udis
 //             },
 //             callback
-//         );    
+//         );
 //     }
 
 //     public createBeacon(correlationId: string, beacon: BeaconV1,
@@ -84,7 +84,7 @@
 //                 beacon: beacon
 //             },
 //             callback
-//         );    
+//         );
 //     }
 
 //     public deleteBeaconById(correlationId: string, beaconId: string,

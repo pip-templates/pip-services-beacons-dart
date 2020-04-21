@@ -3,30 +3,30 @@ import 'package:pip_services3_commons/pip_services3_commons.dart';
 
 import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
 
-final BEACON1 = BeaconV1.from(
-    '1', //id:
-    '00001', //udi:
-    BeaconTypeV1.altBeacon, //type:
-    '1', //site_id:
-    'TestBeacon1', //label:
-    {
-      'type': 'Point',
-      'coordinates': [0, 0]
-    }, // center:
-    50 //radius:
-    );
-final BEACON2 = BeaconV1.from(
-    '2', //id:
-    '00002', //udi:
-    BeaconTypeV1.iBeacon, //type:
-    '1', //site_id:
-    'TestBeacon2', // label:
-    {
-      'type': 'Point',
-      'coordinates': [2, 2]
-    }, //center:
-    70 // radius:
-    );
+final BEACON1 = BeaconV1.fromMap({
+  'id': '1',
+  'udi': '00001',
+  'type': BeaconTypeV1.altBeacon,
+  'site_id': '1',
+  'label': 'TestBeacon1',
+  'center': {
+    'type': 'Point',
+    'coordinates': [0, 0]
+  },
+  'radius': 50.0
+});
+final BEACON2 = BeaconV1.fromMap({
+  'id': '2',
+  'udi': '00002',
+  'type': BeaconTypeV1.iBeacon,
+  'site_id': '1',
+  'label': 'TestBeacon2',
+  'center': {
+    'type': 'Point',
+    'coordinates': [2, 2]
+  },
+  'radius': 70.0
+});
 
 class BeaconsClientV1Fixture {
   IBeaconsClientV1 _client;

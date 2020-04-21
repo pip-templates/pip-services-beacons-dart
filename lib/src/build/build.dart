@@ -1,2 +1,2 @@
-export  './BeaconsServiceFactory.dart';
+export './BeaconsServiceFactory.dart';
 export './BeaconsClientFactory.dart';

@@ -396,4 +396,3 @@
 //     beacon?: Beacon.AsObject,
 //   }
 // }
-

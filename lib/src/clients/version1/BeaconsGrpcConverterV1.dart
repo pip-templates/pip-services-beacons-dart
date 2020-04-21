@@ -125,7 +125,7 @@
 
 //         let obj = new messages.Point();
 //         obj.setType(point.type);
-//         obj.setCoordinatesList(point.coordinates);    
+//         obj.setCoordinatesList(point.coordinates);
 
 //         return obj;
 //     }
@@ -154,7 +154,7 @@
 //         obj.setLabel(beacon.label);
 //         let center = BeaconsGrpcConverterV1.fromPoint(beacon.center);
 //         obj.setCenter(center);
-//         obj.setRadius(beacon.radius);        
+//         obj.setRadius(beacon.radius);
 
 //         return obj;
 //     }

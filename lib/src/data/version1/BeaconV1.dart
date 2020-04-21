@@ -11,9 +11,16 @@ class BeaconV1 implements IStringIdentifiable {
   double radius;
 
   BeaconV1();
- 
-  BeaconV1.from(this.id, this.udi, this.type, this.site_id, this.label,
-      this.center, this.radius);
+
+  BeaconV1.fromMap(Map<String, dynamic> map) {
+    id = map['id'];
+    site_id = map['site_id'];
+    type = map['type'];
+    udi = map['udi'];
+    label = map['label'];
+    center = map['center']; // GeoJson
+    radius = map['radius'];
+  }
 
   void fromJson(Map<String, dynamic> json) {
     id = json['id'];

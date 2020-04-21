@@ -48,7 +48,7 @@
 //         );
 //     }
 
-//     public calculatePosition(correlationId: string, siteId: string, udis: string[], 
+//     public calculatePosition(correlationId: string, siteId: string, udis: string[],
 //         callback: (err: any, position: any) => void): void {
 //         this.callCommand(
 //             'calculate_position',
@@ -58,7 +58,7 @@
 //                 udis: udis
 //             },
 //             callback
-//         );    
+//         );
 //     }
 
 //     public createBeacon(correlationId: string, beacon: BeaconV1,
@@ -82,7 +82,7 @@
 //                 beacon: beacon
 //             },
 //             callback
-//         );    
+//         );
 //     }
 
 //     public deleteBeaconById(correlationId: string, beaconId: string,

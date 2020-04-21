@@ -8,7 +8,6 @@ services:
     image: ${IMAGE:-test}
     links:
       - mongo
-    #  - couchbase
     environment:
       - MONGO_SERVICE_HOST=mongo
       - MONGO_SERVICE_PORT=27017
@@ -21,5 +20,3 @@ services:
   mongo:
     image: mongo:latest
 
-  #couchbase:
-  #  image: couchbase/server-sandbox:6.0.1

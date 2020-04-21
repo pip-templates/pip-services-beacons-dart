@@ -4,7 +4,7 @@
 // import { BeaconsLambdaClientV1 } from '../../../src/clients/version1/BeaconsLambdaClientV1';
 // import { BeaconsClientV1Fixture } from './BeaconsClientV1Fixture';
 
-// // Todo: add a BeaconsLambdaServiceV1? 
+// // Todo: add a BeaconsLambdaServiceV1?
 // suite('BeaconsLambdaClientV1', () => {
 //     let AWS_LAMDBA_ARN = process.env["AWS_LAMDBA_ARN"] || "";
 //     let AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
@@ -25,7 +25,6 @@
 //     // Skip if connection is not configured
 //     if (lambdaConfig.getAsNullableString("connection.protocol") != "aws")
 //         return;
-
 
 //     // let service: BeaconsLambdaServiceV1;
 //     let client: BeaconsLambdaClientV1;
@@ -55,7 +54,7 @@
 
 // /*     teardown((done) => {
 //         client.close(null, (err) => {
-//             service.close(null, done);    
+//             service.close(null, done);
 //         });
 //     }); */
 

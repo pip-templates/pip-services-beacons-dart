@@ -114,7 +114,7 @@
 //                     (err, response) => {
 //                         err = err || response.error;
 //                         let beacon = response ? response.beacon : null;
-                        
+
 //                         assert.isNull(err);
 
 //                         assert.isObject(beacon);
@@ -137,7 +137,7 @@
 //                     (err, response) => {
 //                         err = err || response.error;
 //                         let beacon = response ? response.beacon : null;
-                        
+
 //                         assert.isNull(err);
 
 //                         assert.isObject(beacon);
@@ -163,7 +163,7 @@
 //                         let page = response ? response.page : null;
 
 //                         assert.isNull(err);
-                        
+
 //                         assert.isObject(page);
 //                         assert.lengthOf(page.data, 2);
 
@@ -186,7 +186,7 @@
 //                         let beacon = response ? response.beacon : null;
 
 //                         assert.isNull(err);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(beacon1.id, beacon.id);
 //                         assert.equal('ABC', beacon.label);
@@ -206,7 +206,7 @@
 //                         let beacon = response ? response.beacon : null;
 
 //                         assert.isNull(err);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(beacon1.id, beacon.id);
 
@@ -226,7 +226,7 @@
 //                         let position = response ? response.position : null;
 
 //                         assert.isNull(err);
-                        
+
 //                         assert.isObject(position);
 //                         assert.equal('Point', position.type);
 //                         assert.lengthOf(position.coordinates, 2);
@@ -248,7 +248,7 @@
 //                         let beacon = response ? response.beacon : null;
 
 //                         assert.isNull(err);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(beacon1.id, beacon.id);
 
@@ -268,7 +268,7 @@
 
 //                         assert.isNull(err);
 
-//                         /* 
+//                         /*
 //                         assert.isObject(beacon);
 //                         */
 

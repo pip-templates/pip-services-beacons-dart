@@ -93,5 +93,4 @@ class BeaconsCommandSet extends CommandSet {
       return _controller.deleteBeaconById(correlationId, beaconId);
     });
   }
-
 }

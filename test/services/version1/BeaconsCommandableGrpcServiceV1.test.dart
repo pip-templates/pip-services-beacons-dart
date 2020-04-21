@@ -118,7 +118,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let beacon = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(BEACON1.udi, beacon.udi);
 //                         assert.equal(BEACON1.site_id, beacon.site_id);
@@ -146,7 +146,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let beacon = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(BEACON2.udi, beacon.udi);
 //                         assert.equal(BEACON2.site_id, beacon.site_id);
@@ -164,7 +164,7 @@
 //                     {
 //                         method: 'v1.beacons.get_beacons',
 //                         args_empty: false,
-//                         args_json: JSON.stringify( { 
+//                         args_json: JSON.stringify( {
 //                             filter: new FilterParams(),
 //                             paging: new PagingParams()
 //                         } )
@@ -175,7 +175,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let page = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(page);
 //                         assert.lengthOf(page.data, 2);
 
@@ -203,7 +203,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let beacon = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(beacon1.id, beacon.id);
 //                         assert.equal('ABC', beacon.label);
@@ -228,7 +228,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let beacon = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(beacon1.id, beacon.id);
 
@@ -253,7 +253,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let position = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(position);
 //                         assert.equal('Point', position.type);
 //                         assert.lengthOf(position.coordinates, 2);
@@ -280,7 +280,7 @@
 //                         assert.isFalse(response.result_empty);
 //                         assert.isString(response.result_json);
 //                         let beacon = JSON.parse(response.result_json);
-                        
+
 //                         assert.isObject(beacon);
 //                         assert.equal(beacon1.id, beacon.id);
 
@@ -301,9 +301,9 @@
 //                     (err, response) => {
 //                         assert.isNull(err);
 
-//                         /* 
+//                         /*
 //                         assert.isFalse(response.result_empty);
-//                         assert.isString(response.result_json); 
+//                         assert.isString(response.result_json);
 //                         let beacon = JSON.parse(response.result_json);
 //                         assert.isObject(beacon);
 //                         */

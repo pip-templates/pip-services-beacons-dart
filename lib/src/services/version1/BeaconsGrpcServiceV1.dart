@@ -14,7 +14,7 @@
 
 // export class BeaconsGrpcServiceV1 extends GrpcService {
 //     private _controller: IBeaconsController;
-	
+
 //     public constructor() {
 //         super(services.BeaconsService);
 //         this._dependencyResolver.put('controller', new Descriptor("beacons", "controller", "*", "*", "*"));
@@ -82,7 +82,7 @@
 //                 let response = new messages.BeaconReply();
 //                 response.setError(error);
 //                 response.setBeacon(beacon)
-                
+
 //                 callback(err, response);
 //             }
 //         );
@@ -128,9 +128,9 @@
 //                 let response = new messages.BeaconReply();
 //                 response.setError(error);
 //                 response.setBeacon(beacon)
-                
+
 //                 callback(err, response);
-                
+
 //             }
 //         );
 //     }
@@ -151,7 +151,7 @@
 //                 let response = new messages.BeaconReply();
 //                 response.setError(error);
 //                 response.setBeacon(beacon)
-                
+
 //                 callback(err, response);
 //             }
 //         );
@@ -171,7 +171,7 @@
 //                 let response = new messages.BeaconReply();
 //                 response.setError(error);
 //                 response.setBeacon(beacon)
-                
+
 //                 callback(err, response);
 //             }
 //         );
@@ -179,43 +179,43 @@
 
 //     public register() {
 //         this.registerMethod(
-//             'get_beacons', 
+//             'get_beacons',
 //             null,
 //             this.getBeacons
 //         );
 
 //         this.registerMethod(
-//             'get_beacon_by_id', 
+//             'get_beacon_by_id',
 //             null,
 //             this.getBeaconById
 //         );
 
 //         this.registerMethod(
-//             'get_beacon_by_udi', 
+//             'get_beacon_by_udi',
 //             null,
 //             this.getBeaconByUdi
 //         );
 
 //         this.registerMethod(
-//             'calculate_position', 
+//             'calculate_position',
 //             null,
 //             this.calculatePosition
 //         );
 
 //         this.registerMethod(
-//             'create_beacon', 
+//             'create_beacon',
 //             null,
 //             this.createBeacon
 //         );
 
 //         this.registerMethod(
-//             'update_beacon', 
+//             'update_beacon',
 //             null,
 //             this.updateBeacon
 //         );
 
 //         this.registerMethod(
-//             'delete_beacon_by_id', 
+//             'delete_beacon_by_id',
 //             null,
 //             this.deleteBeaconById
 //         );

@@ -1,17 +1,15 @@
-# Start with the Node.js 8 image
-FROM node:8
+# Start with the Dart image
+FROM google/dart:2.7.2
 
 # Set a working directory
 WORKDIR /app
 
-# Copy the project file
-COPY package*.json ./
-
-# Install ALL node_modules, including 'devDependencies'
-RUN npm install
-
 # Copy the entire project
 COPY . .
+
+# Install all dependencies
+RUN pub get
+RUN pub get --offline
 
 # Set the required environment variables
 ENV HTTP_PORT=8080
@@ -22,4 +20,5 @@ ENV MONGO_SERVICE_PORT=27017
 EXPOSE "8080:8080"
 
 # Specify the command for running the service
-CMD [ "node", "bin/run.js" ]
+CMD []
+ENTRYPOINT ["/usr/bin/dart", "./bin/run.dart"]

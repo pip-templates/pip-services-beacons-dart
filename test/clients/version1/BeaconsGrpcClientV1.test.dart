@@ -67,7 +67,7 @@
 //         client.close(null, (err) => {
 //             service.close(null, (err) => {
 //                 persistence.close(null, done);
-//             });    
+//             });
 //         });
 //     });
 
