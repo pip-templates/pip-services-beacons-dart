@@ -327,7 +327,7 @@
     },
     {
       "name": "pip_services3_rpc",
-      "rootUri": "file:///C:/Users/Nikopol/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/pip_services3_rpc-1.0.0",
+      "rootUri": "file:///C:/Users/Nikopol/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/pip_services3_rpc-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -506,7 +506,7 @@
       "languageVersion": "2.0"
     }
   ],
-  "generated": "2020-04-20T19:10:50.497042Z",
+  "generated": "2020-04-21T11:59:09.107786Z",
   "generator": "pub",
   "generatorVersion": "2.7.2"
 }

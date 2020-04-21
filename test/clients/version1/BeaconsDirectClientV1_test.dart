@@ -40,12 +40,12 @@ void main() {
       await persistence.close(null);
     });
 
-    test('CRUD Operations', () {
-      fixture.testCrudOperations();
+    test('CRUD Operations', () async {
+      await fixture.testCrudOperations();
     });
 
-    test('Calculate Positions', () {
-      fixture.testCalculatePosition();
+    test('Calculate Positions', () async {
+      await fixture.testCalculatePosition();
     });
   });
 }

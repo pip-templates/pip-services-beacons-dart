@@ -60,14 +60,8 @@ class BeaconsCommandSet extends CommandSet {
             .withRequiredProperty('udis', ArraySchema(TypeCode.String)),
         (String correlationId, Parameters args) async {
       var siteId = args.getAsString('site_id');
-      var udis = args.getAsObject('udis');
-      return <String, dynamic>{
-        'type': 'Point',
-        'coordinates': [0, 0],
-        'siteId':siteId,
-        'udis':udis
-      };
-     //return  await _controller.calculatePosition(correlationId, siteId, udis);
+      var udis = List<String>.from(args.getAsObject('udis'));
+      return _controller.calculatePosition(correlationId, siteId, udis);
     });
   }
 

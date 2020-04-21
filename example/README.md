@@ -1,0 +1,1 @@
+This project is template for work microservice on Dart lang.

@@ -1,9 +1,11 @@
-// var BeaconsProcess = require('../obj/src/container/BeaconsProcess').BeaconsProcess;
+import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
 
-// try {
-//     let proc = new BeaconsProcess();
-//     proc._configPath = "./config/config.yml";
-//     proc.run(process.argv);
-// } catch (ex) {
-//     console.error(ex);
-// }
+void main(List<String> argument) {
+  try {
+    var proc = BeaconsProcess();
+    proc.configPath = './config/config.yml';
+    proc.run(argument);
+  } catch (ex) {
+    print(ex);
+  }
+}

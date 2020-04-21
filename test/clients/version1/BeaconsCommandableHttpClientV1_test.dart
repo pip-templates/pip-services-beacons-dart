@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:test/test.dart';
 import 'package:pip_services3_commons/pip_services3_commons.dart';
 import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
@@ -10,7 +12,7 @@ var httpConfig = ConfigParams.fromTuples([
   'connection.host',
   'localhost',
   'connection.port',
-  3000
+  3001
 ]);
 
 void main() {
@@ -33,7 +35,6 @@ void main() {
 
       client = BeaconsCommandableHttpClientV1();
       client.configure(httpConfig);
-
       var references = References.fromTuples([
         Descriptor('beacons', 'persistence', 'memory', 'default', '1.0'),
         persistence,
@@ -47,13 +48,9 @@ void main() {
       controller.setReferences(references);
       service.setReferences(references);
       client.setReferences(references);
-
       fixture = BeaconsClientV1Fixture(client);
-
       await persistence.open(null);
-
       await service.open(null);
-
       await client.open(null);
     });
 
@@ -61,14 +58,15 @@ void main() {
       await client.close(null);
       await service.close(null);
       await persistence.close(null);
+      await Future.delayed(Duration(milliseconds: 2000));
     });
 
-    test('CRUD Operations', () {
-      fixture.testCrudOperations();
+    test('CRUD Operations', () async {
+      await fixture.testCrudOperations();
     });
 
-    test('Calculate Position', () {
-      fixture.testCalculatePosition();
+    test('Calculate Position', () async {
+      await fixture.testCalculatePosition();
     });
   });
 }

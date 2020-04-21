@@ -59,130 +59,88 @@ void main() {
       BeaconV1 beacon1;
 
       // Create the first beacon
-      try {
-        var beacon = await controller.createBeacon(null, BEACON1);
-        expect(beacon, isNotNull);
-        expect(BEACON1.udi, beacon.udi);
-        expect(BEACON1.site_id, beacon.site_id);
-        expect(BEACON1.type, beacon.type);
-        expect(BEACON1.label, beacon.label);
-        expect(beacon.center, isNotNull);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      var beacon = await controller.createBeacon(null, BEACON1);
+      expect(beacon, isNotNull);
+      expect(BEACON1.udi, beacon.udi);
+      expect(BEACON1.site_id, beacon.site_id);
+      expect(BEACON1.type, beacon.type);
+      expect(BEACON1.label, beacon.label);
+      expect(beacon.center, isNotNull);
 
       // Create the second beacon
-      try {
-        var beacon = await controller.createBeacon(null, BEACON2);
-        expect(beacon, isNotNull);
-        expect(BEACON2.udi, beacon.udi);
-        expect(BEACON2.site_id, beacon.site_id);
-        expect(BEACON2.type, beacon.type);
-        expect(BEACON2.label, beacon.label);
-        expect(beacon.center, isNotNull);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      beacon = await controller.createBeacon(null, BEACON2);
+      expect(beacon, isNotNull);
+      expect(BEACON2.udi, beacon.udi);
+      expect(BEACON2.site_id, beacon.site_id);
+      expect(BEACON2.type, beacon.type);
+      expect(BEACON2.label, beacon.label);
+      expect(beacon.center, isNotNull);
 
       // Get all beacons
-      try {
-        var page =
-            await controller.getBeacons(null, FilterParams(), PagingParams());
-        expect(page, isNotNull);
-        expect(page.data.length, 2);
-        beacon1 = page.data[0];
-      } catch (err) {
-        expect(err, isNull);
-      }
+      var page =
+          await controller.getBeacons(null, FilterParams(), PagingParams());
+      expect(page, isNotNull);
+      expect(page.data.length, 2);
+      beacon1 = page.data[0];
 
       // Update the beacon
-      try {
-        beacon1.label = 'ABC';
+      beacon1.label = 'ABC';
 
-        var beacon = await controller.updateBeacon(null, beacon1);
-        expect(beacon, isNotNull);
-        expect(beacon1.id, beacon.id);
-        expect('ABC', beacon.label);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      beacon = await controller.updateBeacon(null, beacon1);
+      expect(beacon, isNotNull);
+      expect(beacon1.id, beacon.id);
+      expect('ABC', beacon.label);
+
       // Get beacon by udi
-      try {
-        var beacon = await controller.getBeaconByUdi(null, beacon1.udi);
-        expect(beacon, isNotNull);
-        expect(beacon1.id, beacon.id);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      beacon = await controller.getBeaconByUdi(null, beacon1.udi);
+      expect(beacon, isNotNull);
+      expect(beacon1.id, beacon.id);
+
       // Delete the beacon
-      try {
-        var beacon = await controller.deleteBeaconById(null, beacon1.id);
-        expect(beacon, isNotNull);
-        expect(beacon1.id, beacon.id);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      beacon = await controller.deleteBeaconById(null, beacon1.id);
+      expect(beacon, isNotNull);
+      expect(beacon1.id, beacon.id);
 
       // Try to get deleted beacon
-      try {
-        var beacon = await controller.getBeaconById(null, beacon1.id);
-        expect(beacon, isNull);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      beacon = await controller.getBeaconById(null, beacon1.id);
+      expect(beacon, isNull);
     });
 
     test('Calculate Positions', () async {
       // Create the first beacon
-      try {
-        var beacon = await controller.createBeacon(null, BEACON1);
-        expect(beacon, isNotNull);
-        expect(BEACON1.udi, beacon.udi);
-        expect(BEACON1.site_id, beacon.site_id);
-        expect(BEACON1.type, beacon.type);
-        expect(BEACON1.label, beacon.label);
-        expect(beacon.center, isNotNull);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      var beacon = await controller.createBeacon(null, BEACON1);
+      expect(beacon, isNotNull);
+      expect(BEACON1.udi, beacon.udi);
+      expect(BEACON1.site_id, beacon.site_id);
+      expect(BEACON1.type, beacon.type);
+      expect(BEACON1.label, beacon.label);
+      expect(beacon.center, isNotNull);
 
       // Create the second beacon
-      try {
-        var beacon = await controller.createBeacon(null, BEACON2);
-        expect(beacon, isNotNull);
-        expect(BEACON2.udi, beacon.udi);
-        expect(BEACON2.site_id, beacon.site_id);
-        expect(BEACON2.type, beacon.type);
-        expect(BEACON2.label, beacon.label);
-        expect(beacon.center, isNotNull);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      beacon = await controller.createBeacon(null, BEACON2);
+      expect(beacon, isNotNull);
+      expect(BEACON2.udi, beacon.udi);
+      expect(BEACON2.site_id, beacon.site_id);
+      expect(BEACON2.type, beacon.type);
+      expect(BEACON2.label, beacon.label);
+      expect(beacon.center, isNotNull);
 
       // Calculate position for one beacon
-      try {
-        var position = await controller.calculatePosition(null, '1', ['00001']);
-        expect(position, isNotNull);
-        expect('Point', position['type']);
-        expect((position['coordinates'] as List).length, 2);
-        expect(0, (position['coordinates'] as List)[0]);
-        expect(0, (position['coordinates'] as List)[1]);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      var position = await controller.calculatePosition(null, '1', ['00001']);
+      expect(position, isNotNull);
+      expect('Point', position['type']);
+      expect((position['coordinates'] as List).length, 2);
+      expect(0, (position['coordinates'] as List)[0]);
+      expect(0, (position['coordinates'] as List)[1]);
 
       // Calculate position for two beacons
-      try {
-        var position =
-            await controller.calculatePosition(null, '1', ['00001', '00002']);
-        expect(position, isNotNull);
-        expect('Point', position['type']);
-        expect((position['coordinates'] as List).length, 2);
-        expect(1, (position['coordinates'] as List)[0]);
-        expect(1, (position['coordinates'] as List)[1]);
-      } catch (err) {
-        expect(err, isNull);
-      }
+      position =
+          await controller.calculatePosition(null, '1', ['00001', '00002']);
+      expect(position, isNotNull);
+      expect('Point', position['type']);
+      expect((position['coordinates'] as List).length, 2);
+      expect(1, (position['coordinates'] as List)[0]);
+      expect(1, (position['coordinates'] as List)[1]);
     });
   });
 }

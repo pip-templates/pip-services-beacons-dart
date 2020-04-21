@@ -21,8 +21,11 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
       correlationId,
       {'filter': filter, 'paging': paging},
     );
-    return DataPage<BeaconV1>.fromJson(
-        result, (item) => BeaconV1().fromJson(item));
+    return DataPage<BeaconV1>.fromJson(json.decode(result), (item) {
+      var beacon = BeaconV1();
+      beacon.fromJson(item);
+      return beacon;
+    });
   }
 
   @override
@@ -38,7 +41,7 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
   @override
   Future<BeaconV1> getBeaconByUdi(String correlationId, String udi) async {
     var result =
-        await callCommand('get_beacon_by_udi', correlationId, {udi: udi});
+        await callCommand('get_beacon_by_udi', correlationId, {'udi': udi});
     if (result == null) return null;
     var item = BeaconV1();
     item.fromJson(json.decode(result));
@@ -48,8 +51,9 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
   @override
   Future<Map<String, dynamic>> calculatePosition(
       String correlationId, String siteId, List<String> udis) async {
-    return json.decode(await callCommand('calculate_position', correlationId,
-        {'site_id': siteId, 'udis': udis}));
+    var result = await callCommand(
+        'calculate_position', correlationId, {'site_id': siteId, 'udis': udis});
+    return json.decode(result);
   }
 
   @override
@@ -65,7 +69,7 @@ class BeaconsCommandableHttpClientV1 extends CommandableHttpClient
   @override
   Future<BeaconV1> updateBeacon(String correlationId, BeaconV1 beacon) async {
     var result =
-        await callCommand('update_beacon', correlationId, {beacon: beacon});
+        await callCommand('update_beacon', correlationId, {'beacon': beacon});
     if (result == null) return null;
     var item = BeaconV1();
     item.fromJson(json.decode(result));
