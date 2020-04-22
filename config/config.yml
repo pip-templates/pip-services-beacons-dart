@@ -25,11 +25,11 @@
 {{#MONGO_ENABLED}}
 # MongoDb persistence
 - descriptor: "beacons:persistence:mongodb:default:1.0"
-    connection:
-      uri: {{MONGO_SERVICE_URI}}
-      host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
-      port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
-      database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
+  connection:
+    uri: {{MONGO_SERVICE_URI}}
+    host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
+    port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
+    database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
 {{/MONGO_ENABLED}}
 
 {{^MEMORY_ENABLED}}{{^FILE_ENABLED}}{{^MONGO_ENABLED}}

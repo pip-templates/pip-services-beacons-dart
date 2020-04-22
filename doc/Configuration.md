@@ -20,55 +20,41 @@ Example **config.yml** file:
 # Perfomance counter that post values to log
 - descriptor: "pip-services:counters:log:default:1.0"
 
-{{#if MEMORY_ENABLED}}
+{{#MEMORY_ENABLED}}
 # In-memory persistence. Use only for testing!
 - descriptor: "beacons:persistence:memory:default:1.0"
-{{/if}}
+{{/MEMORY_ENABLED}}
 
-{{#if FILE_ENABLED}}
+{{#FILE_ENABLED}}
 # File persistence
 - descriptor: "beacons:persistence:file:default:1.0"
-  path: {{FILE_PATH}}{{#unless FILE_PATH}}"./data/beacons.json"{{/unless}}
-{{/if}}
-
-{{#if MONGO_ENABLED}}
+  path: {{FILE_PATH}}{{^FILE_PATH}}"./data/beacons.json"{{/FILE_PATH}}
+{{/FILE_ENABLED}}
+    
+{{#MONGO_ENABLED}}
 # MongoDb persistence
 - descriptor: "beacons:persistence:mongodb:default:1.0"
   connection:
     uri: {{MONGO_SERVICE_URI}}
-    host: {{MONGO_SERVICE_HOST}}{{#unless MONGO_SERVICE_HOST}}"localhost"{{/unless}}
-    port: {{MONGO_SERVICE_PORT}}{{#unless MONGO_SERVICE_PORT}}27017{{/unless}}
-    database: {{MONGO_DB}}{{#unless MONGO_DB}}"test"{{/unless}}
-{{/if}}
+    host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
+    port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
+    database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
+{{/MONGO_ENABLED}}
 
-{{#if COUCHBASE_ENABLED}}
-# Couchbase Persistence
-- descriptor: "beacons:persistence:couchbase:default:1.0"
-  bucket: {{COUCHBASE_BUCKET}}{{#unless COUCHBASE_BUCKET}}test{{/unless}}
-  connection:
-    uri: {{{COUCHBASE_SERVICE_URI}}}
-    host: {{{COUCHBASE_SERVICE_HOST}}}{{#unless COUCHBASE_SERVICE_HOST}}localhost{{/unless}}
-    port: {{COUCHBASE_SERVICE_PORT}}{{#unless COUCHBASE_SERVICE_PORT}}8091{{/unless}}
-  credential:
-    username: {{COUCHBASE_USER}}{{#unless COUCHBASE_USER}}Administrator{{/unless}}
-    password: {{COUCHBASE_PASS}}{{#unless COUCHBASE_PASS}}password{{/unless}}
-{{/if}}
-
-{{#unless MEMORY_ENABLED}}{{#unless FILE_ENABLED}}{{#unless MONGO_ENABLED}}{{#unless COUCHBASE_ENABLED}}
-# Default to in-memory persistence, if nothing is set
+{{^MEMORY_ENABLED}}{{^FILE_ENABLED}}{{^MONGO_ENABLED}}
+# In-memory persistence. Use only for testing!
 - descriptor: "beacons:persistence:memory:default:1.0"
-{{/unless}}{{/unless}}{{/unless}}{{/unless}}
+{{/MONGO_ENABLED}}{{/FILE_ENABLED}}{{/MEMORY_ENABLED}}
 
 # Controller
 - descriptor: "beacons:controller:default:default:1.0"
 
-{{#if HTTP_ENABLED}}
 # Common HTTP endpoint
 - descriptor: "pip-services:endpoint:http:default:1.0"
   connection:
     protocol: http
     host: 0.0.0.0
-    port: {{HTTP_PORT}}{{#unless HTTP_PORT}}8080{{/unless}}
+    port: {{HTTP_PORT}}{{^HTTP_PORT}}8080{{/HTTP_PORT}}
 
 # HTTP endpoint service version 1.0
 - descriptor: "beacons:service:commandable-http:default:1.0"
@@ -78,20 +64,19 @@ Example **config.yml** file:
 
 # Status service
 - descriptor: "pip-services:status-service:http:default:1.0"
-{{/if}}
 
-{{#if GRPC_ENABLED}}
+{{#GRPC_ENABLED}}
 # Common GRPC endpoint
 - descriptor: "beacons:endpoint:grpc:default:1.0"
   connection:
     protocol: http
     host: 0.0.0.0
     port: 8090
-
+    
 # GRPC endpoint service version 1.0
 - descriptor: "beacons:service:grpc:default:1.0"
-
+  
 # Commandable GRPC endpoint version 1.0
 - descriptor: "beacons:service:commandable-grpc:default:1.0"
-{{/if}}
+{{/GRPC_ENABLED}}
 ```

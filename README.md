@@ -25,14 +25,15 @@ This microservice does not depend on other microservices.
 The logical contract of the microservice is presented below. 
 
 ```dart
-export class BeaconV1 implements IStringIdentifiable {
-    public id: string;
-    public site_id: string;
-    public type?: string;
-    public udi: string;
-    public label?: string;
-    public center?: any; // GeoJson
-    public radius?: number;
+class BeaconV1 implements IStringIdentifiable {
+  @override
+  String id;
+  String site_id;
+  String type;
+  String udi;
+  String label;
+  Map<String, dynamic> center; // GeoJson
+  double radius;
 }
 
 // GeoJson Example:
@@ -41,27 +42,25 @@ export class BeaconV1 implements IStringIdentifiable {
 //     "coordinates": [30, 10]
 // }
 
-export interface IBeaconsClientV1 {
-    getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
-        callback: (err: any, page: DataPage<BeaconV1>) => void): void;
+abstract class IBeaconsClientV1 {
+  Future<DataPage<BeaconV1>> getBeacons(
+      String correlationId, FilterParams filter, PagingParams paging);
 
-    getBeaconById(correlationId: string, beaconId: string,
-        callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> getBeaconById(String correlationId, String beaconId);
 
-    getBeaconByUdi(correlationId: string, udi: string,
-        callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> getBeaconByUdi(String correlationId, String udi);
 
-    calculatePosition(correlationId: string, siteId: string, udis: string[], 
-        callback: (err: any, position: any) => void): void;
+  Future<Map<String, dynamic>> calculatePosition(
+      String correlationId, String siteId, List<String> udis);
 
-    createBeacon(correlationId: string, beacon: BeaconV1,
-        callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> createBeacon(String correlationId, BeaconV1 beacon);
 
-    updateBeacon(correlationId: string, beacon: BeaconV1,
-        callback: (err: any, beacon: BeaconV1) => void): void;
+  Future<BeaconV1> updateBeacon(
+    String correlationId,
+    BeaconV1 beacon,
+  );
 
-    deleteBeaconById(correlationId: string, beaconId: string,
-        callback: (err: any, beacon: BeaconV1) => void): void;            
+  Future<BeaconV1> deleteBeaconById(String correlationId, String beaconId);
 }
 
 ```
@@ -94,55 +93,41 @@ Example of a microservice configuration
 # Perfomance counter that post values to log
 - descriptor: "pip-services:counters:log:default:1.0"
 
-{{#if MEMORY_ENABLED}}
+{{#MEMORY_ENABLED}}
 # In-memory persistence. Use only for testing!
 - descriptor: "beacons:persistence:memory:default:1.0"
-{{/if}}
+{{/MEMORY_ENABLED}}
 
-{{#if FILE_ENABLED}}
+{{#FILE_ENABLED}}
 # File persistence
 - descriptor: "beacons:persistence:file:default:1.0"
-  path: {{FILE_PATH}}{{#unless FILE_PATH}}"./data/beacons.json"{{/unless}}
-{{/if}}
-
-{{#if MONGO_ENABLED}}
+  path: {{FILE_PATH}}{{^FILE_PATH}}"./data/beacons.json"{{/FILE_PATH}}
+{{/FILE_ENABLED}}
+    
+{{#MONGO_ENABLED}}
 # MongoDb persistence
 - descriptor: "beacons:persistence:mongodb:default:1.0"
   connection:
     uri: {{MONGO_SERVICE_URI}}
-    host: {{MONGO_SERVICE_HOST}}{{#unless MONGO_SERVICE_HOST}}"localhost"{{/unless}}
-    port: {{MONGO_SERVICE_PORT}}{{#unless MONGO_SERVICE_PORT}}27017{{/unless}}
-    database: {{MONGO_DB}}{{#unless MONGO_DB}}"test"{{/unless}}
-{{/if}}
+    host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
+    port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
+    database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
+{{/MONGO_ENABLED}}
 
-{{#if COUCHBASE_ENABLED}}
-# Couchbase Persistence
-- descriptor: "beacons:persistence:couchbase:default:1.0"
-  bucket: {{COUCHBASE_BUCKET}}{{#unless COUCHBASE_BUCKET}}test{{/unless}}
-  connection:
-    uri: {{{COUCHBASE_SERVICE_URI}}}
-    host: {{{COUCHBASE_SERVICE_HOST}}}{{#unless COUCHBASE_SERVICE_HOST}}localhost{{/unless}}
-    port: {{COUCHBASE_SERVICE_PORT}}{{#unless COUCHBASE_SERVICE_PORT}}8091{{/unless}}
-  credential:
-    username: {{COUCHBASE_USER}}{{#unless COUCHBASE_USER}}Administrator{{/unless}}
-    password: {{COUCHBASE_PASS}}{{#unless COUCHBASE_PASS}}password{{/unless}}
-{{/if}}
-
-{{#unless MEMORY_ENABLED}}{{#unless FILE_ENABLED}}{{#unless MONGO_ENABLED}}{{#unless COUCHBASE_ENABLED}}
-# Default to in-memory persistence, if nothing is set
+{{^MEMORY_ENABLED}}{{^FILE_ENABLED}}{{^MONGO_ENABLED}}
+# In-memory persistence. Use only for testing!
 - descriptor: "beacons:persistence:memory:default:1.0"
-{{/unless}}{{/unless}}{{/unless}}{{/unless}}
+{{/MONGO_ENABLED}}{{/FILE_ENABLED}}{{/MEMORY_ENABLED}}
 
 # Controller
 - descriptor: "beacons:controller:default:default:1.0"
 
-{{#if HTTP_ENABLED}}
 # Common HTTP endpoint
 - descriptor: "pip-services:endpoint:http:default:1.0"
   connection:
     protocol: http
     host: 0.0.0.0
-    port: {{HTTP_PORT}}{{#unless HTTP_PORT}}8080{{/unless}}
+    port: {{HTTP_PORT}}{{^HTTP_PORT}}8080{{/HTTP_PORT}}
 
 # HTTP endpoint service version 1.0
 - descriptor: "beacons:service:commandable-http:default:1.0"
@@ -152,29 +137,28 @@ Example of a microservice configuration
 
 # Status service
 - descriptor: "pip-services:status-service:http:default:1.0"
-{{/if}}
 
-{{#if GRPC_ENABLED}}
+{{#GRPC_ENABLED}}
 # Common GRPC endpoint
 - descriptor: "beacons:endpoint:grpc:default:1.0"
   connection:
     protocol: http
     host: 0.0.0.0
     port: 8090
-
+    
 # GRPC endpoint service version 1.0
 - descriptor: "beacons:service:grpc:default:1.0"
-
+  
 # Commandable GRPC endpoint version 1.0
 - descriptor: "beacons:service:commandable-grpc:default:1.0"
-{{/if}}
+{{/GRPC_ENABLED}}
 ```
 
 For more information on microservice configuration, see [The Configuration Guide](Configuration.md).
 
 The microservice can be started using the command:
 ```bash
-pub run lib/main.dart
+dart ./bin/run.dart
 ```
 
 ## Use
@@ -186,16 +170,12 @@ If you use dart, then get references to the required libraries:
 - Pip.Services3.Rpc: 
 https://github.com/pip-services3-dart/pip-services3-rpc-dart
 
-<!-- Todo: rename pip-templates-microservice-dart? -->
-Add classes from the **pip-services3-commons-dart** and **pip-templates-microservice-dart** packages
+<!-- Todo: rename pip-templates-microservice-dart -->
+Add **pip-services3-commons-dart** and **pip-templates-microservice-dart** packages
 ```dart
-import { ConfigParams } from 'pip-services3-commons-dart';
-import { FilterParams } from 'pip-services3-commons-dart';
-import { PagingParams } from 'pip-services3-commons-dart';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import 'package:pip_templates_microservice/pip_templates_microservice.dart';
 
-import { BeaconV1 } from 'pip-templates-microservice-dart';
-import { BeaconTypeV1 } from 'pip-templates-microservice-dart';
-import { BeaconsCommandableHttpClientV1 } from 'pip-templates-microservice-dart';
 ```
 
 Define client configuration parameters that match the configuration of the microservice's external API
@@ -211,79 +191,58 @@ var httpConfig = ConfigParams.fromTuples(
 Instantiate the client and open a connection to the microservice
 ```dart
 // Create the client instance
-let client = new BeaconsCommandableHttpClientV1();
+var client = BeaconsCommandableHttpClientV1();
 
 // Configure the client
 client.configure(httpConfig);
 
 // Connect to the microservice
-client.open(null, (err) => {
-  if (err) {
-    // Error handling...
-  }
-});
-    
+try{
+  await client.open(null)
+}catch() {
+  // Error handling...
+}       
 // Work with the microservice
-...
+// ...
 ```
 
 The client is now ready to perform operations
 ```dart
 // Define a beacon
-let beacon: BeaconV1 = {
-    id: '1',
-    udi: '00001',
-    type: BeaconTypeV1.AltBeacon,
-    site_id: '1',
-    label: 'TestBeacon',
-    center: { type: 'Point', coordinates: [ 0, 0 ] },
-    radius: 50
-};
-
-async.series([
-    // Create the beacon
-    (callback) => {
-        this.client.createBeacon(
-            null,
-            BEACON1,
-            (err, beacon) => {
-                if(err){
-                  // Error handling...
-                }
-                
-                // Do something with the returned beacon...
-
-                callback();
-            }
-        );
-    },
-    // Get a list of beacons
-    (callback) => {
-        this.client.getBeacons(
-            null,
-            FilterParams.fromTuples(
-              "label", "TestBeacon",
-            ),
-            new PagingParams(0, 10),
-            (err, page) => {
-                if(err){
-                  // Error handling...
-                }
-
-                // Do something with the returned page...
-                // E.g. beacon = page.data[0];
-
-                callback();
-            }
-        )
-    }
-], (err, results) => {
-    if (err) {
-        // Error handling...
-    }
+final BEACON1 = BeaconV1.fromMap({
+    'id': '1',
+    'udi': '00001',
+    'type': BeaconTypeV1.AltBeacon,
+    'site_id': '1',
+    'label': 'TestBeacon',
+    'center': { 'type': 'Point', 'coordinates': [ 0, 0 ] },
+    'radius': 50.0
 });
+
+    // Create the beacon
+    try {
+      var beacon = await client.createBeacon('123', BEACON1);
+      // Do something with the returned beacon...
+    } catch(err) {
+      // Error handling...     
+    }
+      
+    // Get a list of beacons
+    try {
+      var page = await client.getBeacons(
+            null, FilterParams.fromTuples([
+              "label", "TestBeacon",
+            ]), PagingParams(0, 10));
+      // Do something with the returned page...
+      // E.g. beacon = page.data[0];
+    } catch(err) {              
+        // Error handling...
+    }   
+
 ```
 
 ## Acknowledgements
 
-This microservice was created and currently maintained by *Sergey Seroukhov*.
+This microservice was created and currently maintained by 
+- **Sergey Seroukhov**.
+- **Levichev Dmitry**
