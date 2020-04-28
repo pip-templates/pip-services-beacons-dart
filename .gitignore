@@ -1,7 +1,9 @@
-npm-debug.log*
-/.idea
 /node_modules
-/dist
-/obj/test
-/data/*.json
-/docker/id_rsa
+/npm-debug.log
+/.idea
+*.map
+/obj/test/**/*
+/data/dummies.json
+/.dart_tool
+/.packages
+/pubspec.lock
