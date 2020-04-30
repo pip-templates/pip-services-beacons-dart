@@ -12,7 +12,7 @@ final BEACON1 = BeaconV1(
     label: 'TestBeacon1',
     center: {
       'type': 'Point',
-      'coordinates': [0, 0]
+      'coordinates': [0.0, 0.0]
     },
     radius: 50.0);
 final BEACON2 = BeaconV1(
@@ -23,7 +23,7 @@ final BEACON2 = BeaconV1(
     label: 'TestBeacon2',
     center: {
       'type': 'Point',
-      'coordinates': [2, 2]
+      'coordinates': [2.0, 2.0]
     },
     radius: 70.0);
 

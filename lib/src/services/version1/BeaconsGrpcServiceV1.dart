@@ -1,224 +1,146 @@
-// let _ = require('lodash');
-// let services = require('../../../../src/protos/beacons_v1_grpc_pb');
-// let messages = require('../../../../src/protos/beacons_v1_pb');
+import 'dart:async';
 
-// import { IReferences } from 'pip-services3-commons-node';
-// import { Descriptor } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
-// import { FilterParams } from 'pip-services3-commons-node';
-// import { GrpcService } from 'pip-services3-grpc-node';
+import 'package:grpc/grpc.dart';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import 'package:pip_services3_grpc/pip_services3_grpc.dart';
 
-// import { BeaconV1 } from '../../data/version1/BeaconV1';
-// import { IBeaconsController } from '../../logic/IBeaconsController';
-// import { BeaconsGrpcConverterV1 } from '../../clients/version1/BeaconsGrpcConverterV1';
+import '../../generated/beacons_v1.pbgrpc.dart';
+import '../../logic/IBeaconsController.dart';
+import '../../clients/version1/BeaconsGrpcConverterV1.dart';
 
-// export class BeaconsGrpcServiceV1 extends GrpcService {
-//     private _controller: IBeaconsController;
+class BeaconsGrpcServiceV1 extends BeaconsServiceBase with GrpcService {
+  IBeaconsController _controller;
 
-//     public constructor() {
-//         super(services.BeaconsService);
-//         this._dependencyResolver.put('controller', new Descriptor("beacons", "controller", "*", "*", "*"));
-//     }
+  BeaconsGrpcServiceV1() {
+    serviceName = $name;
+    dependencyResolver.put(
+        'controller', Descriptor('beacons', 'controller', '*', '*', '*'));
+  }
+  @override
+  void setReferences(IReferences references) {
+    super.setReferences(references);
+    _controller =
+        dependencyResolver.getOneRequired<IBeaconsController>('controller');
+  }
 
-// 	public setReferences(references: IReferences): void {
-// 		super.setReferences(references);
-//         this._controller = this._dependencyResolver.getOneRequired<IBeaconsController>('controller');
-//     }
+  @override
+  void register() {
+    registerService(this);
+  }
 
-//     private getBeacons(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let filter = new FilterParams();
-//         BeaconsGrpcConverterV1.setMap(filter, call.request.getFilterMap());
-//         let paging = BeaconsGrpcConverterV1.toPagingParams(call.request.getPaging());
+  @override
+  Future<BeaconsPositionReply> calculate_position(
+      ServiceCall call, BeaconsPositionRequest request) async {
+    var correlationId = request.correlationId;
+    var siteId = request.siteId;
+    var udis = request.udis;
+    var response = BeaconsPositionReply();
+    try {
+      var result =
+          await _controller.calculatePosition(correlationId, siteId, udis);
 
-//         this._controller.getBeacons(
-//             correlationId,
-//             filter,
-//             paging,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-//                 let page = err == null ? BeaconsGrpcConverterV1.fromBeaconsPage(result) : null;
+      response.position = BeaconsGrpcConverterV1.fromPoint(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
 
-//                 let response = new messages.BeaconsPageReply();
-//                 response.setError(error);
-//                 response.setPage(page);
+  @override
+  Future<BeaconReply> create_beacon(
+      ServiceCall call, BeaconRequest request) async {
+    var correlationId = request.correlationId;
+    var beacon = BeaconsGrpcConverterV1.toBeacon(request.beacon);
+    var response = BeaconReply();
+    try {
+      var result = await _controller.createBeacon(correlationId, beacon);
+      response.beacon = BeaconsGrpcConverterV1.fromBeacon(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
 
-//                 callback(err, response);
-//             }
-//         );
-//     }
+  @override
+  Future<BeaconReply> delete_beacon_by_id(
+      ServiceCall call, BeaconIdRequest request) async {
+    var correlationId = request.correlationId;
+    var id = request.beaconId;
+    var response = BeaconReply();
+    try {
+      var result = await _controller.deleteBeaconById(correlationId, id);
+      response.beacon = BeaconsGrpcConverterV1.fromBeacon(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
 
-//     private getBeaconById(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let id = call.request.getBeaconId();
+  @override
+  Future<BeaconReply> get_beacon_by_id(
+      ServiceCall call, BeaconIdRequest request) async {
+    var correlationId = request.correlationId;
+    var id = request.beaconId;
+    var response = BeaconReply();
+    try {
+      var result = await _controller.getBeaconById(correlationId, id);
+      response.beacon = BeaconsGrpcConverterV1.fromBeacon(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
 
-//         this._controller.getBeaconById(
-//             correlationId,
-//             id,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-//                 let beacon = BeaconsGrpcConverterV1.fromBeacon(result);
+  @override
+  Future<BeaconReply> get_beacon_by_udi(
+      ServiceCall call, BeaconUdiRequest request) async {
+    var correlationId = request.correlationId;
+    var udi = request.udi;
+    var response = BeaconReply();
+    try {
+      var result = await _controller.getBeaconByUdi(correlationId, udi);
+      response.beacon = BeaconsGrpcConverterV1.fromBeacon(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
 
-//                 let response = new messages.BeaconReply();
-//                 response.setError(error);
-//                 response.setBeacon(beacon)
+  @override
+  Future<BeaconsPageReply> get_beacons(
+      ServiceCall call, BeaconsPageRequest request) async {
+    var correlationId = request.correlationId;
+    var filter = FilterParams(request.filter);
+    var paging = BeaconsGrpcConverterV1.toPagingParams(request.paging);
+    var response = BeaconsPageReply();
+    try {
+      var result = await _controller.getBeacons(correlationId, filter, paging);
+      response.page = BeaconsGrpcConverterV1.fromBeaconsPage(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
 
-//                 callback(err, response);
-//             }
-//         );
-//     }
-
-//     private getBeaconByUdi(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let udi = call.request.getUdi();
-
-//         this._controller.getBeaconByUdi(
-//             correlationId,
-//             udi,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-//                 let beacon = BeaconsGrpcConverterV1.fromBeacon(result);
-
-//                 let response = new messages.BeaconReply();
-//                 response.setError(error);
-//                 response.setBeacon(beacon)
-
-//                 callback(err, response);
-//             }
-//         );
-//     }
-
-//     private calculatePosition(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let siteId = call.request.getSiteId();
-//         let udis = call.request.getUdisList();
-
-//         this._controller.calculatePosition(
-//             correlationId,
-//             siteId,
-//             udis,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-
-//                 let response = new messages.BeaconsPositionReply();
-
-//                 result=BeaconsGrpcConverterV1.fromPoint(result);
-
-//                 response.setError(error);
-//                 response.setPosition(result);
-
-//                 callback(err, response);
-//             }
-//         );
-//     }
-
-//     private createBeacon(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let beacon = call.request.getBeacon();;
-
-//         beacon = BeaconsGrpcConverterV1.toBeacon(beacon);
-
-//         this._controller.createBeacon(
-//             correlationId,
-//             beacon,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-//                 let beacon = BeaconsGrpcConverterV1.fromBeacon(result);
-
-//                 let response = new messages.BeaconReply();
-//                 response.setError(error);
-//                 response.setBeacon(beacon)
-
-//                 callback(err, response);
-
-//             }
-//         );
-//     }
-
-//     private updateBeacon(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let beacon = call.request.getBeacon();
-
-//         beacon = BeaconsGrpcConverterV1.toBeacon(beacon);
-
-//         this._controller.updateBeacon(
-//             correlationId,
-//             beacon,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-//                 let beacon = BeaconsGrpcConverterV1.fromBeacon(result);
-
-//                 let response = new messages.BeaconReply();
-//                 response.setError(error);
-//                 response.setBeacon(beacon)
-
-//                 callback(err, response);
-//             }
-//         );
-//     }
-
-//     private deleteBeaconById(call: any, callback: any) {
-//         let correlationId = call.request.getCorrelationId();
-//         let id = call.request.getBeaconId();;
-
-//         this._controller.deleteBeaconById(
-//             correlationId,
-//             id,
-//             (err, result) => {
-//                 let error = BeaconsGrpcConverterV1.fromError(err);
-//                 let beacon = BeaconsGrpcConverterV1.fromBeacon(result);
-
-//                 let response = new messages.BeaconReply();
-//                 response.setError(error);
-//                 response.setBeacon(beacon)
-
-//                 callback(err, response);
-//             }
-//         );
-//     }
-
-//     public register() {
-//         this.registerMethod(
-//             'get_beacons',
-//             null,
-//             this.getBeacons
-//         );
-
-//         this.registerMethod(
-//             'get_beacon_by_id',
-//             null,
-//             this.getBeaconById
-//         );
-
-//         this.registerMethod(
-//             'get_beacon_by_udi',
-//             null,
-//             this.getBeaconByUdi
-//         );
-
-//         this.registerMethod(
-//             'calculate_position',
-//             null,
-//             this.calculatePosition
-//         );
-
-//         this.registerMethod(
-//             'create_beacon',
-//             null,
-//             this.createBeacon
-//         );
-
-//         this.registerMethod(
-//             'update_beacon',
-//             null,
-//             this.updateBeacon
-//         );
-
-//         this.registerMethod(
-//             'delete_beacon_by_id',
-//             null,
-//             this.deleteBeaconById
-//         );
-
-//     }
-// }
+  @override
+  Future<BeaconReply> update_beacon(
+      ServiceCall call, BeaconRequest request) async {
+    var correlationId = request.correlationId;
+    var beacon = BeaconsGrpcConverterV1.toBeacon(request.beacon);
+    var response = BeaconReply();
+    try {
+      var result = await _controller.updateBeacon(correlationId, beacon);
+      response.beacon = BeaconsGrpcConverterV1.fromBeacon(result);
+    } catch (err) {
+      var error = BeaconsGrpcConverterV1.fromError(err);
+      response.error = error;
+    }
+    return response;
+  }
+}

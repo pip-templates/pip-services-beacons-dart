@@ -1,4 +1,4 @@
-.PHONY: test generate gendoc docview analyze format
+.PHONY: test generate gendoc docview analyze format genproto
 
 test:
 	@pub run test --concurrency=1 ./test
@@ -17,3 +17,6 @@ analyze:
 
 format:
 	@dartfmt -w lib test
+
+genproto:
+	@protoc -I lib/src/protos/ lib/src/protos/beacons_v1.proto --dart_out=grpc:lib/src/generated

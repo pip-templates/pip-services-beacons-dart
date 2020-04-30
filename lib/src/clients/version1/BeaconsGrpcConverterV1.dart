@@ -1,201 +1,166 @@
-// let _ = require('lodash');
-// let messages = require('../../../../src/protos/beacons_v1_pb');
+import '../../generated/beacons_v1.pb.dart' as messages;
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import '../../data/version1/BeaconV1.dart';
 
-// import { DataPage } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { ConfigParams } from 'pip-services3-commons-node';
-// import { StringConverter } from 'pip-services3-commons-node';
-// import { DateTimeConverter } from 'pip-services3-commons-node';
-// import { ErrorDescriptionFactory } from 'pip-services3-commons-node';
-// import { ErrorDescription } from 'pip-services3-commons-node';
-// import { ApplicationExceptionFactory } from 'pip-services3-commons-node';
+class BeaconsGrpcConverterV1 {
+  static dynamic fromError(err) {
+    if (err == null) return null;
 
-// import { BeaconV1 } from '../../data/version1/BeaconV1';
+    var description = ErrorDescriptionFactory.create(err);
+    var obj = messages.ErrorDescription();
 
-// // Todo: why isn't this part of pip-services-grpc?
-// export class BeaconsGrpcConverterV1 {
+    obj.type = description.type ?? '';
+    obj.category = description.category ?? '';
+    obj.code = description.code ?? '';
+    obj.correlationId = description.correlation_id ?? '';
+    obj.status =
+        description.status != null ? description.status.toString() : '';
+    obj.message = description.message ?? '';
+    obj.cause = description.cause ?? '';
+    obj.stackTrace = description.stack_trace ?? '';
+    if (description.details != null) {
+      obj.details.addAll(description.details.innerValue());
+    }
 
-//     public static fromError(err: any): any {
-//         if (err == null) return null;
+    return obj;
+  }
 
-//         let description = ErrorDescriptionFactory.create(err);
-//         let obj = new messages.ErrorDescription();
+  static dynamic toError(obj) {
+    if (obj == null || (obj.getCategory() == '' && obj.getMessage() == '')) {
+      return null;
+    }
 
-//         obj.setType(description.type);
-//         obj.setCategory(description.category);
-//         obj.setCode(description.code);
-//         obj.setCorrelationId(description.correlation_id);
-//         obj.setStatus(description.status);
-//         obj.setMessage(description.message);
-//         obj.setCause(description.cause);
-//         obj.setStackTrace(description.stack_trace);
-//         BeaconsGrpcConverterV1.setMap(obj.getDetailsMap(), description.details);
+    var description = ErrorDescription();
+    description.fromJson({
+      'type': obj.type,
+      'category': obj.category,
+      'code': obj.code,
+      'correlation_id': obj.correlationId,
+      'status': obj.status,
+      'message': obj.message,
+      'cause': obj.cause,
+      'stack_trace': obj.stackTrace,
+      'details': obj.details
+    });
 
-//         return obj;
-//     }
+    return ApplicationExceptionFactory.create(description);
+  }
 
-//     public static toError(obj: any): any {
-//         if (obj == null || (obj.getCategory() == "" && obj.getMessage() == ""))
-//             return null;
+  // private static toJson(value: any): string {
+  //     if (value == null || value == '') return null;
+  //     return JSON.stringify(value);
+  // }
 
-//         let description: ErrorDescription = {
-//             type: obj.getType(),
-//             category: obj.getCategory(),
-//             code: obj.getCode(),
-//             correlation_id: obj.getCorrelationId(),
-//             status: obj.getStatus(),
-//             message: obj.getMessage(),
-//             cause: obj.getCause(),
-//             stack_trace: obj.getStackTrace(),
-//             details: BeaconsGrpcConverterV1.getMap(obj.getDetailsMap())
-//         }
+  // private static fromJson(value: string): any {
+  //     if (value == null || value == '') return null;
+  //     return JSON.parse(value);
+  // }
 
-//         return ApplicationExceptionFactory.create(description);
-//     }
+  static dynamic fromPagingParams(PagingParams paging) {
+    if (paging == null) return null;
 
-//     public static setMap(map: any, values: any): void {
-//         if (values == null) return;
+    var obj = messages.PagingParams();
+    if (paging.skip != null) {
+      obj.skip += paging.skip;
+    }
+    if (paging.take != null) {
+      obj.take = paging.take;
+    }
+    if (paging.total != null) {
+      obj.total = paging.total;
+    }
 
-//         if (_.isFunction(values.toObject))
-//             values = values.toObject();
+    return obj;
+  }
 
-//         if (_.isArray(values)) {
-//             for (let entry of values) {
-//                 if (_.isArray(entry))
-//                     map[entry[0]] = entry[1];
-//             }
-//         } else {
-//             if (_.isFunction(map.set)) {
-//                 for (let propName in values) {
-//                     if (values.hasOwnProperty(propName))
-//                         map.set(propName, values[propName]);
-//                 }
-//             } else {
-//                 for (let propName in values) {
-//                     if (values.hasOwnProperty(propName))
-//                         map[propName] = values[propName];
-//                 }
-//             }
-//         }
-//     }
+  static PagingParams toPagingParams(obj) {
+    if (obj == null) {
+      return null;
+    }
 
-//     public static getMap(map: any): any {
-//         let values = {};
-//         BeaconsGrpcConverterV1.setMap(values, map);
-//         return values;
-//     }
+    var paging = PagingParams(obj.skip, obj.take, obj.total);
 
-//     private static toJson(value: any): string {
-//         if (value == null || value == "") return null;
-//         return JSON.stringify(value);
-//     }
+    return paging;
+  }
 
-//     private static fromJson(value: string): any {
-//         if (value == null || value == "") return null;
-//         return JSON.parse(value);
-//     }
+  static messages.Point fromPoint(Map<String, dynamic> point) {
+    if (point == null) return null;
 
-//     public static fromPagingParams(paging: PagingParams): any {
-//         if (paging == null) return null;
+    var obj = messages.Point();
+    obj.type = point['type'];
+    for (var coord in point['coordinates']) {
+      obj.coordinates.add(coord);
+    }
 
-//         let obj = new messages.PagingParams();
+    return obj;
+  }
 
-//         obj.setSkip(paging.skip);
-//         obj.setTake(paging.take);
-//         obj.setTotal(paging.total);
+  static Map<String, dynamic> toPoint(messages.Point obj) {
+    if (obj == null) return null;
 
-//         return obj;
-//     }
+    var point = {'type': obj.type, 'coordinates': obj.coordinates};
 
-//     public static toPagingParams(obj: any): PagingParams {
-//         if (obj == null)
-//             return null;
+    return point;
+  }
 
-//         let paging: PagingParams = new PagingParams(
-//             obj.getSkip(),
-//             obj.getTake(),
-//             obj.getTotal()
-//         );
+  static messages.Beacon fromBeacon(BeaconV1 beacon) {
+    if (beacon == null) return null;
 
-//         return paging;
-//     }
+    var obj = messages.Beacon();
 
-//     public static fromPoint(point: any): any {
-//         if (point == null) return null;
+    obj.id = beacon.id;
+    obj.siteId = beacon.site_id;
+    obj.type = beacon.type;
+    obj.udi = beacon.udi;
+    obj.label = beacon.label;
+    var center = BeaconsGrpcConverterV1.fromPoint(beacon.center);
+    obj.center = center;
+    obj.radius = beacon.radius;
 
-//         let obj = new messages.Point();
-//         obj.setType(point.type);
-//         obj.setCoordinatesList(point.coordinates);
+    return obj;
+  }
 
-//         return obj;
-//     }
+  static BeaconV1 toBeacon(messages.Beacon obj) {
+    if (obj == null) return null;
 
-//     public static toPoint(obj: any): any {
-//         if (obj == null) return null;
+    var beacon = BeaconV1();
+    beacon.fromJson({
+      'id': obj.id,
+      'site_id': obj.siteId,
+      'type': obj.type,
+      'udi': obj.udi,
+      'label': obj.label,
+      'center': BeaconsGrpcConverterV1.toPoint(obj.center),
+      'radius': obj.radius
+    });
 
-//         let point = {
-//             type: obj.getType(),
-//             coordinates: obj.getCoordinatesList()
-//         };
+    return beacon;
+  }
 
-//         return point;
-//     }
+  static messages.BeaconsPage fromBeaconsPage(DataPage<BeaconV1> page) {
+    if (page == null) return null;
 
-//     public static fromBeacon(beacon: BeaconV1): any {
-//         if (beacon == null) return null;
+    var obj = messages.BeaconsPage();
+    if (page.total != null) {
+      obj.total += page.total;
+    }
+    var data = <messages.Beacon>[];
+    for (var item in page.data) {
+      data.add(fromBeacon(item));
+    }
+    ;
+    obj.data.addAll(data);
 
-//         let obj = new messages.Beacon();
+    return obj;
+  }
 
-//         obj.setId(beacon.id);
-//         obj.setSiteId(beacon.site_id);
-//         obj.setType(beacon.type);
-//         obj.setUdi(beacon.udi);
-//         obj.setType(beacon.type);
-//         obj.setLabel(beacon.label);
-//         let center = BeaconsGrpcConverterV1.fromPoint(beacon.center);
-//         obj.setCenter(center);
-//         obj.setRadius(beacon.radius);
+  static DataPage<BeaconV1> toBeaconsPage(messages.BeaconsPage obj) {
+    if (obj == null) return null;
 
-//         return obj;
-//     }
-
-//     public static toBeacon(obj: any): BeaconV1 {
-//         if (obj == null) return null;
-
-//         let beacon: BeaconV1 = {
-//             id: obj.getId(),
-//             site_id: obj.getSiteId(),
-//             type: obj.getType(),
-//             udi: obj.getUdi(),
-//             label: obj.getLabel(),
-//             center: BeaconsGrpcConverterV1.toPoint(obj.getCenter()),
-//             radius: obj.getRadius()
-//         };
-
-//         return beacon;
-//     }
-
-//     public static fromBeaconsPage(page: DataPage<BeaconV1>): any {
-//         if (page == null) return null;
-
-//         let obj = new messages.BeaconsPage();
-
-//         obj.setTotal(page.total);
-//         let data = _.map(page.data, BeaconsGrpcConverterV1.fromBeacon);
-//         obj.setDataList(data);
-
-//         return obj;
-//     }
-
-//     public static toBeaconsPage(obj: any): DataPage<BeaconV1> {
-//         if (obj == null) return null;
-
-//         let data = _.map(obj.getDataList(), BeaconsGrpcConverterV1.toBeacon);
-//         let page: DataPage<BeaconV1> = {
-//             total: obj.getTotal(),
-//             data: data
-//         };
-
-//         return page;
-//     }
-// }
+    var data = <BeaconV1>[];
+    for (var item in obj.data) {
+      data.add(toBeacon(item));
+    }
+    return DataPage<BeaconV1>(data, obj.total.toInt());
+  }
+}

@@ -1,9 +1,9 @@
-// import { Descriptor } from 'pip-services3-commons-node';
-// import { CommandableGrpcService } from 'pip-services3-grpc-node';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import 'package:pip_services3_grpc/pip_services3_grpc.dart';
 
-// export class BeaconsCommandableGrpcServiceV1 extends CommandableGrpcService {
-//     public constructor() {
-//         super('v1.beacons');
-//         this._dependencyResolver.put('controller', new Descriptor('beacons', 'controller', '*', '*', '1.0'));
-//     }
-// }
+class BeaconsCommandableGrpcServiceV1 extends CommandableGrpcService {
+  BeaconsCommandableGrpcServiceV1() : super('v1.beacons') {
+    dependencyResolver.put(
+        'controller', Descriptor('beacons', 'controller', '*', '*', '1.0'));
+  }
+}

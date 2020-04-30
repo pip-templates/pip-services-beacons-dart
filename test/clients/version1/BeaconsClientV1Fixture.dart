@@ -11,7 +11,7 @@ final BEACON1 = BeaconV1(
     label: 'TestBeacon1',
     center: {
       'type': 'Point',
-      'coordinates': [0, 0]
+      'coordinates': [0.0, 0.0]
     },
     radius: 50.0);
 final BEACON2 = BeaconV1(
@@ -22,7 +22,7 @@ final BEACON2 = BeaconV1(
     label: 'TestBeacon2',
     center: {
       'type': 'Point',
-      'coordinates': [2, 2]
+      'coordinates': [2.0, 2.0]
     },
     radius: 70.0);
 
@@ -38,7 +38,7 @@ class BeaconsClientV1Fixture {
     BeaconV1 beacon1;
 
     // Create the first beacon
-    var beacon = await _client.createBeacon(null, BEACON1);
+    var beacon = await _client.createBeacon('123', BEACON1);
     expect(beacon, isNotNull);
     expect(BEACON1.udi, beacon.udi);
     expect(BEACON1.site_id, beacon.site_id);
@@ -47,7 +47,7 @@ class BeaconsClientV1Fixture {
     expect(beacon.center, isNotNull);
 
     // Create the second beacon
-    beacon = await _client.createBeacon(null, BEACON2);
+    beacon = await _client.createBeacon('123', BEACON2);
     expect(beacon, isNotNull);
     expect(BEACON2.udi, beacon.udi);
     expect(BEACON2.site_id, beacon.site_id);
@@ -56,7 +56,7 @@ class BeaconsClientV1Fixture {
     expect(beacon.center, isNotNull);
 
     // Get all beacons
-    var page = await _client.getBeacons(null, FilterParams(), PagingParams());
+    var page = await _client.getBeacons('123', FilterParams(), PagingParams());
     expect(page, isNotNull);
     expect(page.data.length, 2);
     beacon1 = page.data[0];
@@ -64,29 +64,29 @@ class BeaconsClientV1Fixture {
     // Update the beacon
     beacon1.label = 'ABC';
 
-    beacon = await _client.updateBeacon(null, beacon1);
+    beacon = await _client.updateBeacon('123', beacon1);
     expect(beacon, isNotNull);
     expect(beacon1.id, beacon.id);
     expect('ABC', beacon.label);
 
     // Get beacon by udi
-    beacon = await _client.getBeaconByUdi(null, beacon1.udi);
+    beacon = await _client.getBeaconByUdi('123', beacon1.udi);
     expect(beacon, isNotNull);
     expect(beacon1.id, beacon.id);
 
     // Delete the beacon
-    beacon = await _client.deleteBeaconById(null, beacon1.id);
+    beacon = await _client.deleteBeaconById('123', beacon1.id);
     expect(beacon, isNotNull);
     expect(beacon1.id, beacon.id);
 
     // Try to get deleted beacon
-    beacon = await _client.getBeaconById(null, beacon1.id);
+    beacon = await _client.getBeaconById('123', beacon1.id);
     expect(beacon, isNull);
   }
 
   void testCalculatePosition() async {
     // Create the first beacon
-    var beacon = await _client.createBeacon(null, BEACON1);
+    var beacon = await _client.createBeacon('123', BEACON1);
     expect(beacon, isNotNull);
     expect(BEACON1.udi, beacon.udi);
     expect(BEACON1.site_id, beacon.site_id);
@@ -95,7 +95,7 @@ class BeaconsClientV1Fixture {
     expect(beacon.center, isNotNull);
 
     // Create the second beacon
-    beacon = await _client.createBeacon(null, BEACON2);
+    beacon = await _client.createBeacon('123', BEACON2);
     expect(beacon, isNotNull);
     expect(BEACON2.udi, beacon.udi);
     expect(BEACON2.site_id, beacon.site_id);
@@ -104,7 +104,7 @@ class BeaconsClientV1Fixture {
     expect(beacon.center, isNotNull);
 
     // Calculate position for one beacon
-    var position = await _client.calculatePosition(null, '1', ['00001']);
+    var position = await _client.calculatePosition('123', '1', ['00001']);
     expect(position, isNotNull);
     expect('Point', position['type']);
     expect((position['coordinates'] as List).length, 2);
@@ -112,7 +112,7 @@ class BeaconsClientV1Fixture {
     expect(0, (position['coordinates'] as List)[1]);
 
     // Calculate position for two beacons
-    position = await _client.calculatePosition(null, '1', ['00001', '00002']);
+    position = await _client.calculatePosition('123', '1', ['00001', '00002']);
     expect(position, isNotNull);
     expect('Point', position['type']);
     expect((position['coordinates'] as List).length, 2);

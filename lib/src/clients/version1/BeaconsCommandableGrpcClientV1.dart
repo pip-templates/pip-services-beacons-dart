@@ -1,99 +1,100 @@
-// import { FilterParams, ConfigParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
-// import { CommandableGrpcClient } from 'pip-services3-grpc-node';
+import 'dart:async';
 
-// import { BeaconV1 } from '../../data/version1/BeaconV1';
-// import { IBeaconsClientV1 } from './IBeaconsClientV1';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+import 'package:pip_services3_grpc/pip_services3_grpc.dart';
 
-// export class BeaconsCommandableGrpcClientV1 extends CommandableGrpcClient implements IBeaconsClientV1 {
-//     public constructor(config?: any) {
-//         super('v1.beacons');
+import '../../data/version1/BeaconV1.dart';
+import './IBeaconsClientV1.dart';
 
-//         if (config != null)
-//             this.configure(ConfigParams.fromValue(config));
-//     }
+class BeaconsCommandableGrpcClientV1 extends CommandableGrpcClient
+    implements IBeaconsClientV1 {
+  BeaconsCommandableGrpcClientV1([ConfigParams config]) : super('v1.beacons') {
+    if (config != null) {
+      configure(ConfigParams.fromValue(config));
+    }
+  }
 
-//     public getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void {
-//         this.callCommand(
-//             'get_beacons',
-//             correlationId,
-//             { filter: filter, paging: paging },
-//             callback
-//         );
-//     }
+  @override
+  Future<DataPage<BeaconV1>> getBeacons(
+      String correlationId, FilterParams filter, PagingParams paging) async {
+    var response = await callCommand(
+        'get_beacons', correlationId, {'filter': filter, 'paging': paging});
+    if (response == null) {
+      return null;
+    }
 
-//     public getBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'get_beacon_by_id',
-//             correlationId,
-//             {
-//                 beacon_id: beaconId
-//             },
-//             callback
-//         );
-//     }
+    return DataPage<BeaconV1>.fromJson(response, (item) {
+      var beacon = BeaconV1();
+      beacon.fromJson(item);
+      return beacon;
+    });
+  }
 
-//     public getBeaconByUdi(correlationId: string, udi: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'get_beacon_by_udi',
-//             correlationId,
-//             {
-//                 udi: udi
-//             },
-//             callback
-//         );
-//     }
+  @override
+  Future<BeaconV1> getBeaconById(String correlationId, String beaconId) async {
+    var response = await callCommand(
+        'get_beacon_by_id', correlationId, {'beacon_id': beaconId});
+    if (response == null) {
+      return null;
+    }
+    var item = BeaconV1();
+    item.fromJson(response);
+    return item;
+  }
 
-//     public calculatePosition(correlationId: string, siteId: string, udis: string[],
-//         callback: (err: any, position: any) => void): void {
-//         this.callCommand(
-//             'calculate_position',
-//             correlationId,
-//             {
-//                 site_id: siteId,
-//                 udis: udis
-//             },
-//             callback
-//         );
-//     }
+  @override
+  Future<BeaconV1> getBeaconByUdi(String correlationId, String udi) async {
+    var response =
+        await callCommand('get_beacon_by_udi', correlationId, {'udi': udi});
+    if (response == null) {
+      return null;
+    }
+    var item = BeaconV1();
+    item.fromJson(response);
+    return item;
+  }
 
-//     public createBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'create_beacon',
-//             correlationId,
-//             {
-//                 beacon: beacon
-//             },
-//             callback
-//         );
-//     }
+  @override
+  Future<Map<String, dynamic>> calculatePosition(
+      String correlationId, String siteId, List<String> udis) async {
+    return await callCommand(
+        'calculate_position', correlationId, {'site_id': siteId, 'udis': udis});
+  }
 
-//     public updateBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'update_beacon',
-//             correlationId,
-//             {
-//                 beacon: beacon
-//             },
-//             callback
-//         );
-//     }
+  @override
+  Future<BeaconV1> createBeacon(String correlationId, BeaconV1 beacon) async {
+    var response =
+        await callCommand('create_beacon', correlationId, {'beacon': beacon});
+    if (response == null) {
+      return null;
+    }
+    var item = BeaconV1();
+    item.fromJson(response);
+    return item;
+  }
 
-//     public deleteBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'delete_beacon_by_id',
-//             correlationId,
-//             {
-//                 beacon_id: beaconId
-//             },
-//             callback
-//         );
-//     }
-// }
+  @override
+  Future<BeaconV1> updateBeacon(String correlationId, BeaconV1 beacon) async {
+    var response =
+        await callCommand('update_beacon', correlationId, {'beacon': beacon});
+    if (response == null) {
+      return null;
+    }
+    var item = BeaconV1();
+    item.fromJson(response);
+    return item;
+  }
+
+  @override
+  Future<BeaconV1> deleteBeaconById(
+      String correlationId, String beaconId) async {
+    var response = await callCommand(
+        'delete_beacon_by_id', correlationId, {'beacon_id': beaconId});
+    if (response == null) {
+      return null;
+    }
+    var item = BeaconV1();
+    item.fromJson(response);
+    return item;
+  }
+}

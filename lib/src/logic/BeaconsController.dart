@@ -59,8 +59,8 @@ class BeaconsController
         FilterParams.fromTuples(['site_id', siteId, 'udis', udis]), null);
     beacons = page != null ? page.data : [];
 
-    var lat = 0;
-    var lng = 0;
+    var lat = 0.0;
+    var lng = 0.0;
     var count = 0;
 
     for (var beacon in beacons) {

@@ -6,7 +6,7 @@ This is the Beacons microservice from the Pip.Templates library.
 The microservice currently supports the following deployment options:
 * Deployment platforms: Standalone Process
 * External APIs: HTTP/REST, gRPC
-* Persistence: Memory, Flat Files, MongoDB, Couchbase
+* Persistence: Memory, Flat Files, MongoDB
 
 This microservice does not depend on other microservices.
 
