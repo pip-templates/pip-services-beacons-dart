@@ -38,6 +38,12 @@ class BeaconsMongoDbPersistence
       criteria.add({'udi': udi});
     }
 
+    var labelLike = filter.getAsNullableString('label_like');
+    if (labelLike != null) {
+      var regexp = RegExp(r'^' + labelLike, caseSensitive: false);
+      criteria.add({r'$regex': regexp.pattern});
+    }
+
     var udis = filter.getAsObject('udis');
     if (udis is String) {
       udis = (udis as String).split(',');
