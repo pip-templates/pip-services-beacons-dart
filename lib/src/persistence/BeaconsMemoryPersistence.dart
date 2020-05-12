@@ -27,7 +27,7 @@ class BeaconsMemoryPersistence
       udis = null;
     }
 
-    return (BeaconV1 item) {
+    return (item) {
       if (id != null && item.id != id) {
         return false;
       }
