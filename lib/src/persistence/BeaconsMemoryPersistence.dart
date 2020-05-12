@@ -18,7 +18,6 @@ class BeaconsMemoryPersistence
     var siteId = filter.getAsNullableString('site_id');
     var label = filter.getAsNullableString('label');
     var udi = filter.getAsNullableString('udi');
-    var labelLike = filter.getAsNullableString('label_like');
     var udis = filter.getAsObject('udis');
     if (udis != null && udis is String) {
       udis = (udis as String).split(',');
@@ -27,7 +26,7 @@ class BeaconsMemoryPersistence
       udis = null;
     }
 
-    return (BeaconV1 item) {
+    return (item) {
       if (id != null && item.id != id) {
         return false;
       }
@@ -37,14 +36,6 @@ class BeaconsMemoryPersistence
       if (label != null && item.label != label) {
         return false;
       }
-
-      if (labelLike != null) {
-        var regexp = RegExp(r'^' + labelLike, caseSensitive: false);
-        if (regexp.allMatches(item.label).isEmpty) {
-          return false;
-        }
-      }
-
       if (udi != null && item.udi != udi) {
         return false;
       }
