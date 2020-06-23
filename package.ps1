@@ -19,7 +19,7 @@ try {
 
     docker-compose -f ./docker/docker-compose.yml up -d
 
-    Start-Sleep -Seconds 10
+    Start-Sleep -Seconds 15
     Invoke-WebRequest -Uri http://localhost:8080/heartbeat
     Invoke-WebRequest -Uri http://localhost:8080/v1/beacons/get_beacons -Method Post
 

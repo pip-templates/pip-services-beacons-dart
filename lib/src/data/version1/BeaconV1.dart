@@ -33,7 +33,11 @@ class BeaconV1 implements IStringIdentifiable {
     udi = json['udi'];
     label = json['label'];
     center = json['center']; // GeoJson
-    radius = json['radius'];
+    if (json['radius'] is int) {
+      radius = json['radius'].toDouble();
+    } else {
+      radius = json['radius'];
+    }
   }
 
   Map<String, dynamic> toJson() {
