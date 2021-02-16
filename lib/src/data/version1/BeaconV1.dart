@@ -26,7 +26,7 @@ class BeaconV1 implements IStringIdentifiable {
         center = center, // GeoJson
         radius = radius;
 
-  void fromJson(Map<String, dynamic> json) {
+  BeaconV1 fromJson(Map<String, dynamic> json) {
     id = json['id'];
     site_id = json['site_id'];
     type = json['type'];
@@ -38,6 +38,8 @@ class BeaconV1 implements IStringIdentifiable {
     } else {
       radius = json['radius'];
     }
+
+    return this;
   }
 
   Map<String, dynamic> toJson() {
@@ -50,5 +52,16 @@ class BeaconV1 implements IStringIdentifiable {
       'center': center, // GeoJson
       'radius': radius
     };
+  }
+
+  BeaconV1 clone() {
+    return BeaconV1(
+        id: id,
+        site_id: site_id,
+        type: type,
+        udi: udi,
+        label: label,
+        center: center,
+        radius: radius);
   }
 }

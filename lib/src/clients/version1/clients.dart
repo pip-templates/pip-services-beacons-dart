@@ -5,4 +5,5 @@ export './BeaconsCommandableHttpClientV1.dart';
 export './BeaconsCommandableGrpcClientV1.dart';
 export './BeaconsGrpcClientV1.dart';
 export './BeaconsGrpcConverterV1.dart';
-
+export './BeaconsRestClientV1.dart';
+export './BeaconsMockClientV1.dart';

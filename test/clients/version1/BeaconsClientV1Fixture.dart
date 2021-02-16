@@ -116,7 +116,7 @@ class BeaconsClientV1Fixture {
     expect(position, isNotNull);
     expect('Point', position['type']);
     expect((position['coordinates'] as List).length, 2);
-    expect(1, (position['coordinates'] as List)[0]);
-    expect(1, (position['coordinates'] as List)[1]);
+    expect(1.0, (position['coordinates'] as List)[0]);
+    expect(1.0, (position['coordinates'] as List)[1]);
   }
 }
