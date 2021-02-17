@@ -1,5 +1,5 @@
 # Start with the Dart image
-FROM google/dart:2.7.2
+FROM google/dart:2
 
 # Set a working directory
 WORKDIR /app
@@ -12,4 +12,4 @@ RUN pub get
 RUN pub get --offline
 
 # Specify the command from running tests
-CMD pub run test
+CMD pub run test --verbose-trace

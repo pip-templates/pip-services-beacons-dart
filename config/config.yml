@@ -8,65 +8,113 @@
 - descriptor: "pip-services:logger:console:default:1.0"
   level: "trace"
 
-# Perfomance counter that post values to log
+{{#if ELASTICSEARCH_LOGGING_ENABLED}}
+# ElasticSearch logger
+- descriptor: "pip-services:logger:elasticsearch:default:1.0"
+  connection:
+    protocol: {{ELASTICSEARCH_PROTOCOL}}{{#unless ELASTICSEARCH_PROTOCOL}}http{{/unless}}
+    uri: {{ELASTICSEARCH_SERVICE_URI}}
+    host: {{ELASTICSEARCH_SERVICE_HOST}}{{#unless ELASTICSEARCH_SERVICE_HOST}}localhost{{/unless}}
+    port: {{ELASTICSEARCH_SERVICE_PORT}}{{#unless ELASTICSEARCH_SERVICE_PORT}}9200{{/unless}}
+{{/if}}
+
+{{#if CLOUD_WATCH_ENABLED}}
+# Cloudwatch counters
+- descriptor: "pip-services:counters:cloudwatch:default:1.0"
+  region: {{AWS_LAMDBA_ARN}}
+  access_id: {{AWS_ACCESS_ID}}
+  access_key: {{AWS_ACCESS_KEY}}
+
+# Cloudwatch logger
+- descriptor: "pip-services:logger:cloudwatch:default:1.0"
+  level: "info"
+  stream: {{CLOUD_WATCH_STREAM}}
+  group: {{CLOUD_WATCH_GROUP}}
+  region: {{AWS_LAMDBA_ARN}}
+  access_id: {{AWS_ACCESS_ID}}
+  access_key: {{AWS_ACCESS_KEY}}
+{{/if}}
+
+# Performance log counters
 - descriptor: "pip-services:counters:log:default:1.0"
 
-{{#MEMORY_ENABLED}}
-# In-memory persistence. Use only for testing!
-- descriptor: "beacons:persistence:memory:default:1.0"
-{{/MEMORY_ENABLED}}
+# Prometheus performance counters
+- descriptor: "pip-services:counters:prometheus:default:1.0"
+{{#if PUSHGATEWAY_METRICS_ENABLED}}
+  connection:
+    protocol: {{PUSHGATEWAY_PROTOCOL}}{{#unless PUSHGATEWAY_PROTOCOL}}http{{/unless}}
+    uri: {{PUSHGATEWAY_METRICS_SERVICE_URI}}
+    host: {{PUSHGATEWAY_METRICS_SERVICE_HOST}}{{#unless PUSHGATEWAY_METRICS_SERVICE_HOST}}localhost{{/unless}}
+    port: {{PUSHGATEWAY_METRICS_SERVICE_PORT}}{{#unless PUSHGATEWAY_METRICS_SERVICE_PORT}}9090{{/unless}}
+{{/if}}
 
-{{#FILE_ENABLED}}
+{{#if FILE_ENABLED}}
 # File persistence
 - descriptor: "beacons:persistence:file:default:1.0"
-  path: {{FILE_PATH}}{{^FILE_PATH}}"./data/beacons.json"{{/FILE_PATH}}
-{{/FILE_ENABLED}}
-    
-{{#MONGO_ENABLED}}
+  path: {{FILE_PATH}}{{#unless FILE_PATH}}"./data/beacons.json"{{/unless}}
+{{/if}}
+
+{{#if MONGO_ENABLED}}
 # MongoDb persistence
 - descriptor: "beacons:persistence:mongodb:default:1.0"
   connection:
     uri: {{MONGO_SERVICE_URI}}
-    host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
-    port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
-    database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
-{{/MONGO_ENABLED}}
+    host: {{MONGO_SERVICE_HOST}}{{#unless MONGO_SERVICE_HOST}}"localhost"{{/unless}}
+    port: {{MONGO_SERVICE_PORT}}{{#unless MONGO_SERVICE_PORT}}27017{{/unless}}
+    database: {{MONGO_DB}}{{#unless MONGO_DB}}"test"{{/unless}}
+  credential:
+    username: {{MONGO_USER}}
+    password: {{MONGO_PASS}}
+{{/if}}
 
-{{^MEMORY_ENABLED}}{{^FILE_ENABLED}}{{^MONGO_ENABLED}}
-# In-memory persistence. Use only for testing!
+{{#unless MEMORY_ENABLED}}{{#unless FILE_ENABLED}}
+{{#unless MONGO_ENABLED}}{{#unless COUCHBASE_ENABLED}}
+# Default to in-memory persistence, if nothing is set
 - descriptor: "beacons:persistence:memory:default:1.0"
-{{/MONGO_ENABLED}}{{/FILE_ENABLED}}{{/MEMORY_ENABLED}}
+{{/unless}}{{/unless}}
+{{/unless}}{{/unless}}
 
 # Controller
 - descriptor: "beacons:controller:default:default:1.0"
+  options:
+    param1: XYZ
+    param2: 765
 
+{{#if HTTP_ENABLED}}
 # Common HTTP endpoint
 - descriptor: "pip-services:endpoint:http:default:1.0"
   connection:
     protocol: http
     host: 0.0.0.0
-    port: {{HTTP_PORT}}{{^HTTP_PORT}}8080{{/HTTP_PORT}}
+    port: {{HTTP_PORT}}{{#unless HTTP_PORT}}8080{{/unless}}
 
 # HTTP endpoint service version 1.0
 - descriptor: "beacons:service:commandable-http:default:1.0"
+  swagger:
+    enable: true
+    auto: true
+    route: {{SWAGGER_ROUTE}}{{#unless SWAGGER_ROUTE}}swagger{{/unless}}
+    name: {{SWAGGER_NAME}}{{#unless SWAGGER_NAME}}Beacons Service V1{{/unless}}
+    description: {{SWAGGER_DESCRIPTION}}{{#unless SWAGGER_DESCRIPTION}}microservice to demonstrate works with data microservices{{/unless}}
 
 # Hearbeat service
 - descriptor: "pip-services:heartbeat-service:http:default:1.0"
 
 # Status service
 - descriptor: "pip-services:status-service:http:default:1.0"
+{{/if}}
 
-{{#GRPC_ENABLED}}
+{{#if GRPC_ENABLED}}
 # Common GRPC endpoint
 - descriptor: "beacons:endpoint:grpc:default:1.0"
   connection:
     protocol: http
     host: 0.0.0.0
-    port: 8090
-    
+    port: {{GRPC_PORT}}{{#unless GRPC_PORT}}8090{{/unless}}
+
 # GRPC endpoint service version 1.0
 - descriptor: "beacons:service:grpc:default:1.0"
-  
+
 # Commandable GRPC endpoint version 1.0
 - descriptor: "beacons:service:commandable-grpc:default:1.0"
-{{/GRPC_ENABLED}}
+{{/if}}
