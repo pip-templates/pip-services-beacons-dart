@@ -2,8 +2,8 @@
 //  Generated code. Do not modify.
 //  source: beacons_v1.proto
 //
-// @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
 
@@ -52,68 +52,49 @@ class BeaconsClient extends $grpc.Client {
           ($0.BeaconIdRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.BeaconReply.fromBuffer(value));
 
-  BeaconsClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
+  BeaconsClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions options,
+      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.BeaconsPageReply> get_beacons(
       $0.BeaconsPageRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$get_beacons, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$get_beacons, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BeaconReply> get_beacon_by_id(
       $0.BeaconIdRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$get_beacon_by_id, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$get_beacon_by_id, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BeaconReply> get_beacon_by_udi(
       $0.BeaconUdiRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$get_beacon_by_udi, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$get_beacon_by_udi, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BeaconsPositionReply> calculate_position(
       $0.BeaconsPositionRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$calculate_position, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$calculate_position, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BeaconReply> create_beacon($0.BeaconRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$create_beacon, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$create_beacon, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BeaconReply> update_beacon($0.BeaconRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$update_beacon, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$update_beacon, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BeaconReply> delete_beacon_by_id(
       $0.BeaconIdRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$delete_beacon_by_id, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$delete_beacon_by_id, request, options: options);
   }
 }
 

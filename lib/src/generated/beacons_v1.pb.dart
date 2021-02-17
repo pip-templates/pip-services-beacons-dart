@@ -2,8 +2,8 @@
 //  Generated code. Do not modify.
 //  source: beacons_v1.proto
 //
-// @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -11,25 +11,73 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ErrorDescription extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ErrorDescription', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'type')
-    ..aOS(2, 'category')
-    ..aOS(3, 'code')
-    ..aOS(4, 'correlationId')
-    ..aOS(5, 'status')
-    ..aOS(6, 'message')
-    ..aOS(7, 'cause')
-    ..aOS(8, 'stackTrace')
-    ..m<$core.String, $core.String>(9, 'details', entryClassName: 'ErrorDescription.DetailsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('beacons_v1'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ErrorDescription', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'correlationId')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cause')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stackTrace')
+    ..m<$core.String, $core.String>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'details', entryClassName: 'ErrorDescription.DetailsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('beacons_v1'))
     ..hasRequiredFields = false
   ;
 
   ErrorDescription._() : super();
-  factory ErrorDescription() => create();
+  factory ErrorDescription({
+    $core.String type,
+    $core.String category,
+    $core.String code,
+    $core.String correlationId,
+    $core.String status,
+    $core.String message,
+    $core.String cause,
+    $core.String stackTrace,
+    $core.Map<$core.String, $core.String> details,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (category != null) {
+      _result.category = category;
+    }
+    if (code != null) {
+      _result.code = code;
+    }
+    if (correlationId != null) {
+      _result.correlationId = correlationId;
+    }
+    if (status != null) {
+      _result.status = status;
+    }
+    if (message != null) {
+      _result.message = message;
+    }
+    if (cause != null) {
+      _result.cause = cause;
+    }
+    if (stackTrace != null) {
+      _result.stackTrace = stackTrace;
+    }
+    if (details != null) {
+      _result.details.addAll(details);
+    }
+    return _result;
+  }
   factory ErrorDescription.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ErrorDescription.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   ErrorDescription clone() => ErrorDescription()..mergeFromMessage(this);
-  ErrorDescription copyWith(void Function(ErrorDescription) updates) => super.copyWith((message) => updates(message as ErrorDescription));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ErrorDescription copyWith(void Function(ErrorDescription) updates) => super.copyWith((message) => updates(message as ErrorDescription)) as ErrorDescription; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ErrorDescription create() => ErrorDescription._();
@@ -116,19 +164,43 @@ class ErrorDescription extends $pb.GeneratedMessage {
 }
 
 class PagingParams extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PagingParams', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aInt64(1, 'skip')
-    ..a<$core.int>(2, 'take', $pb.PbFieldType.O3)
-    ..aOB(3, 'total')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PagingParams', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'skip')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'take', $pb.PbFieldType.O3)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'total')
     ..hasRequiredFields = false
   ;
 
   PagingParams._() : super();
-  factory PagingParams() => create();
+  factory PagingParams({
+    $fixnum.Int64 skip,
+    $core.int take,
+    $core.bool total,
+  }) {
+    final _result = create();
+    if (skip != null) {
+      _result.skip = skip;
+    }
+    if (take != null) {
+      _result.take = take;
+    }
+    if (total != null) {
+      _result.total = total;
+    }
+    return _result;
+  }
   factory PagingParams.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PagingParams.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   PagingParams clone() => PagingParams()..mergeFromMessage(this);
-  PagingParams copyWith(void Function(PagingParams) updates) => super.copyWith((message) => updates(message as PagingParams));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PagingParams copyWith(void Function(PagingParams) updates) => super.copyWith((message) => updates(message as PagingParams)) as PagingParams; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PagingParams create() => PagingParams._();
@@ -167,18 +239,38 @@ class PagingParams extends $pb.GeneratedMessage {
 }
 
 class Point extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Point', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'type')
-    ..p<$core.double>(2, 'coordinates', $pb.PbFieldType.PD)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Point', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
+    ..p<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coordinates', $pb.PbFieldType.PD)
     ..hasRequiredFields = false
   ;
 
   Point._() : super();
-  factory Point() => create();
+  factory Point({
+    $core.String type,
+    $core.Iterable<$core.double> coordinates,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (coordinates != null) {
+      _result.coordinates.addAll(coordinates);
+    }
+    return _result;
+  }
   factory Point.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Point.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Point clone() => Point()..mergeFromMessage(this);
-  Point copyWith(void Function(Point) updates) => super.copyWith((message) => updates(message as Point));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Point copyWith(void Function(Point) updates) => super.copyWith((message) => updates(message as Point)) as Point; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Point create() => Point._();
@@ -202,23 +294,63 @@ class Point extends $pb.GeneratedMessage {
 }
 
 class Beacon extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Beacon', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'id')
-    ..aOS(2, 'siteId')
-    ..aOS(3, 'type')
-    ..aOS(4, 'udi')
-    ..aOS(5, 'label')
-    ..aOM<Point>(6, 'center', subBuilder: Point.create)
-    ..a<$core.double>(7, 'radius', $pb.PbFieldType.OD)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Beacon', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siteId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'udi')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOM<Point>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'center', subBuilder: Point.create)
+    ..a<$core.double>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'radius', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
   Beacon._() : super();
-  factory Beacon() => create();
+  factory Beacon({
+    $core.String id,
+    $core.String siteId,
+    $core.String type,
+    $core.String udi,
+    $core.String label,
+    Point center,
+    $core.double radius,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (siteId != null) {
+      _result.siteId = siteId;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (udi != null) {
+      _result.udi = udi;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    if (center != null) {
+      _result.center = center;
+    }
+    if (radius != null) {
+      _result.radius = radius;
+    }
+    return _result;
+  }
   factory Beacon.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Beacon.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Beacon clone() => Beacon()..mergeFromMessage(this);
-  Beacon copyWith(void Function(Beacon) updates) => super.copyWith((message) => updates(message as Beacon));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Beacon copyWith(void Function(Beacon) updates) => super.copyWith((message) => updates(message as Beacon)) as Beacon; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Beacon create() => Beacon._();
@@ -295,18 +427,38 @@ class Beacon extends $pb.GeneratedMessage {
 }
 
 class BeaconsPage extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconsPage', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aInt64(1, 'total')
-    ..pc<Beacon>(2, 'data', $pb.PbFieldType.PM, subBuilder: Beacon.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconsPage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'total')
+    ..pc<Beacon>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.PM, subBuilder: Beacon.create)
     ..hasRequiredFields = false
   ;
 
   BeaconsPage._() : super();
-  factory BeaconsPage() => create();
+  factory BeaconsPage({
+    $fixnum.Int64 total,
+    $core.Iterable<Beacon> data,
+  }) {
+    final _result = create();
+    if (total != null) {
+      _result.total = total;
+    }
+    if (data != null) {
+      _result.data.addAll(data);
+    }
+    return _result;
+  }
   factory BeaconsPage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconsPage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconsPage clone() => BeaconsPage()..mergeFromMessage(this);
-  BeaconsPage copyWith(void Function(BeaconsPage) updates) => super.copyWith((message) => updates(message as BeaconsPage));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconsPage copyWith(void Function(BeaconsPage) updates) => super.copyWith((message) => updates(message as BeaconsPage)) as BeaconsPage; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconsPage create() => BeaconsPage._();
@@ -330,19 +482,43 @@ class BeaconsPage extends $pb.GeneratedMessage {
 }
 
 class BeaconsPageRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconsPageRequest', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'correlationId')
-    ..m<$core.String, $core.String>(2, 'filter', entryClassName: 'BeaconsPageRequest.FilterEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('beacons_v1'))
-    ..aOM<PagingParams>(3, 'paging', subBuilder: PagingParams.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconsPageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'correlationId')
+    ..m<$core.String, $core.String>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filter', entryClassName: 'BeaconsPageRequest.FilterEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('beacons_v1'))
+    ..aOM<PagingParams>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paging', subBuilder: PagingParams.create)
     ..hasRequiredFields = false
   ;
 
   BeaconsPageRequest._() : super();
-  factory BeaconsPageRequest() => create();
+  factory BeaconsPageRequest({
+    $core.String correlationId,
+    $core.Map<$core.String, $core.String> filter,
+    PagingParams paging,
+  }) {
+    final _result = create();
+    if (correlationId != null) {
+      _result.correlationId = correlationId;
+    }
+    if (filter != null) {
+      _result.filter.addAll(filter);
+    }
+    if (paging != null) {
+      _result.paging = paging;
+    }
+    return _result;
+  }
   factory BeaconsPageRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconsPageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconsPageRequest clone() => BeaconsPageRequest()..mergeFromMessage(this);
-  BeaconsPageRequest copyWith(void Function(BeaconsPageRequest) updates) => super.copyWith((message) => updates(message as BeaconsPageRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconsPageRequest copyWith(void Function(BeaconsPageRequest) updates) => super.copyWith((message) => updates(message as BeaconsPageRequest)) as BeaconsPageRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconsPageRequest create() => BeaconsPageRequest._();
@@ -377,18 +553,38 @@ class BeaconsPageRequest extends $pb.GeneratedMessage {
 }
 
 class BeaconsPageReply extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconsPageReply', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOM<ErrorDescription>(1, 'error', subBuilder: ErrorDescription.create)
-    ..aOM<BeaconsPage>(2, 'page', subBuilder: BeaconsPage.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconsPageReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOM<ErrorDescription>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error', subBuilder: ErrorDescription.create)
+    ..aOM<BeaconsPage>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'page', subBuilder: BeaconsPage.create)
     ..hasRequiredFields = false
   ;
 
   BeaconsPageReply._() : super();
-  factory BeaconsPageReply() => create();
+  factory BeaconsPageReply({
+    ErrorDescription error,
+    BeaconsPage page,
+  }) {
+    final _result = create();
+    if (error != null) {
+      _result.error = error;
+    }
+    if (page != null) {
+      _result.page = page;
+    }
+    return _result;
+  }
   factory BeaconsPageReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconsPageReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconsPageReply clone() => BeaconsPageReply()..mergeFromMessage(this);
-  BeaconsPageReply copyWith(void Function(BeaconsPageReply) updates) => super.copyWith((message) => updates(message as BeaconsPageReply));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconsPageReply copyWith(void Function(BeaconsPageReply) updates) => super.copyWith((message) => updates(message as BeaconsPageReply)) as BeaconsPageReply; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconsPageReply create() => BeaconsPageReply._();
@@ -422,18 +618,38 @@ class BeaconsPageReply extends $pb.GeneratedMessage {
 }
 
 class BeaconIdRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconIdRequest', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'correlationId')
-    ..aOS(2, 'beaconId')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconIdRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'correlationId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'beaconId')
     ..hasRequiredFields = false
   ;
 
   BeaconIdRequest._() : super();
-  factory BeaconIdRequest() => create();
+  factory BeaconIdRequest({
+    $core.String correlationId,
+    $core.String beaconId,
+  }) {
+    final _result = create();
+    if (correlationId != null) {
+      _result.correlationId = correlationId;
+    }
+    if (beaconId != null) {
+      _result.beaconId = beaconId;
+    }
+    return _result;
+  }
   factory BeaconIdRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconIdRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconIdRequest clone() => BeaconIdRequest()..mergeFromMessage(this);
-  BeaconIdRequest copyWith(void Function(BeaconIdRequest) updates) => super.copyWith((message) => updates(message as BeaconIdRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconIdRequest copyWith(void Function(BeaconIdRequest) updates) => super.copyWith((message) => updates(message as BeaconIdRequest)) as BeaconIdRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconIdRequest create() => BeaconIdRequest._();
@@ -463,18 +679,38 @@ class BeaconIdRequest extends $pb.GeneratedMessage {
 }
 
 class BeaconReply extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconReply', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOM<ErrorDescription>(1, 'error', subBuilder: ErrorDescription.create)
-    ..aOM<Beacon>(2, 'beacon', subBuilder: Beacon.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOM<ErrorDescription>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error', subBuilder: ErrorDescription.create)
+    ..aOM<Beacon>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'beacon', subBuilder: Beacon.create)
     ..hasRequiredFields = false
   ;
 
   BeaconReply._() : super();
-  factory BeaconReply() => create();
+  factory BeaconReply({
+    ErrorDescription error,
+    Beacon beacon,
+  }) {
+    final _result = create();
+    if (error != null) {
+      _result.error = error;
+    }
+    if (beacon != null) {
+      _result.beacon = beacon;
+    }
+    return _result;
+  }
   factory BeaconReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconReply clone() => BeaconReply()..mergeFromMessage(this);
-  BeaconReply copyWith(void Function(BeaconReply) updates) => super.copyWith((message) => updates(message as BeaconReply));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconReply copyWith(void Function(BeaconReply) updates) => super.copyWith((message) => updates(message as BeaconReply)) as BeaconReply; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconReply create() => BeaconReply._();
@@ -508,18 +744,38 @@ class BeaconReply extends $pb.GeneratedMessage {
 }
 
 class BeaconUdiRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconUdiRequest', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'correlationId')
-    ..aOS(2, 'udi')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconUdiRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'correlationId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'udi')
     ..hasRequiredFields = false
   ;
 
   BeaconUdiRequest._() : super();
-  factory BeaconUdiRequest() => create();
+  factory BeaconUdiRequest({
+    $core.String correlationId,
+    $core.String udi,
+  }) {
+    final _result = create();
+    if (correlationId != null) {
+      _result.correlationId = correlationId;
+    }
+    if (udi != null) {
+      _result.udi = udi;
+    }
+    return _result;
+  }
   factory BeaconUdiRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconUdiRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconUdiRequest clone() => BeaconUdiRequest()..mergeFromMessage(this);
-  BeaconUdiRequest copyWith(void Function(BeaconUdiRequest) updates) => super.copyWith((message) => updates(message as BeaconUdiRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconUdiRequest copyWith(void Function(BeaconUdiRequest) updates) => super.copyWith((message) => updates(message as BeaconUdiRequest)) as BeaconUdiRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconUdiRequest create() => BeaconUdiRequest._();
@@ -549,19 +805,43 @@ class BeaconUdiRequest extends $pb.GeneratedMessage {
 }
 
 class BeaconsPositionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconsPositionRequest', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'correlationId')
-    ..aOS(2, 'siteId')
-    ..pPS(3, 'udis')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconsPositionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'correlationId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siteId')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'udis')
     ..hasRequiredFields = false
   ;
 
   BeaconsPositionRequest._() : super();
-  factory BeaconsPositionRequest() => create();
+  factory BeaconsPositionRequest({
+    $core.String correlationId,
+    $core.String siteId,
+    $core.Iterable<$core.String> udis,
+  }) {
+    final _result = create();
+    if (correlationId != null) {
+      _result.correlationId = correlationId;
+    }
+    if (siteId != null) {
+      _result.siteId = siteId;
+    }
+    if (udis != null) {
+      _result.udis.addAll(udis);
+    }
+    return _result;
+  }
   factory BeaconsPositionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconsPositionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconsPositionRequest clone() => BeaconsPositionRequest()..mergeFromMessage(this);
-  BeaconsPositionRequest copyWith(void Function(BeaconsPositionRequest) updates) => super.copyWith((message) => updates(message as BeaconsPositionRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconsPositionRequest copyWith(void Function(BeaconsPositionRequest) updates) => super.copyWith((message) => updates(message as BeaconsPositionRequest)) as BeaconsPositionRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconsPositionRequest create() => BeaconsPositionRequest._();
@@ -594,18 +874,38 @@ class BeaconsPositionRequest extends $pb.GeneratedMessage {
 }
 
 class BeaconsPositionReply extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconsPositionReply', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOM<ErrorDescription>(1, 'error', subBuilder: ErrorDescription.create)
-    ..aOM<Point>(2, 'position', subBuilder: Point.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconsPositionReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOM<ErrorDescription>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error', subBuilder: ErrorDescription.create)
+    ..aOM<Point>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: Point.create)
     ..hasRequiredFields = false
   ;
 
   BeaconsPositionReply._() : super();
-  factory BeaconsPositionReply() => create();
+  factory BeaconsPositionReply({
+    ErrorDescription error,
+    Point position,
+  }) {
+    final _result = create();
+    if (error != null) {
+      _result.error = error;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    return _result;
+  }
   factory BeaconsPositionReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconsPositionReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconsPositionReply clone() => BeaconsPositionReply()..mergeFromMessage(this);
-  BeaconsPositionReply copyWith(void Function(BeaconsPositionReply) updates) => super.copyWith((message) => updates(message as BeaconsPositionReply));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconsPositionReply copyWith(void Function(BeaconsPositionReply) updates) => super.copyWith((message) => updates(message as BeaconsPositionReply)) as BeaconsPositionReply; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconsPositionReply create() => BeaconsPositionReply._();
@@ -639,18 +939,38 @@ class BeaconsPositionReply extends $pb.GeneratedMessage {
 }
 
 class BeaconRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BeaconRequest', package: const $pb.PackageName('beacons_v1'), createEmptyInstance: create)
-    ..aOS(1, 'correlationId')
-    ..aOM<Beacon>(2, 'beacon', subBuilder: Beacon.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BeaconRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'beacons_v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'correlationId')
+    ..aOM<Beacon>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'beacon', subBuilder: Beacon.create)
     ..hasRequiredFields = false
   ;
 
   BeaconRequest._() : super();
-  factory BeaconRequest() => create();
+  factory BeaconRequest({
+    $core.String correlationId,
+    Beacon beacon,
+  }) {
+    final _result = create();
+    if (correlationId != null) {
+      _result.correlationId = correlationId;
+    }
+    if (beacon != null) {
+      _result.beacon = beacon;
+    }
+    return _result;
+  }
   factory BeaconRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BeaconRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BeaconRequest clone() => BeaconRequest()..mergeFromMessage(this);
-  BeaconRequest copyWith(void Function(BeaconRequest) updates) => super.copyWith((message) => updates(message as BeaconRequest));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BeaconRequest copyWith(void Function(BeaconRequest) updates) => super.copyWith((message) => updates(message as BeaconRequest)) as BeaconRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeaconRequest create() => BeaconRequest._();
