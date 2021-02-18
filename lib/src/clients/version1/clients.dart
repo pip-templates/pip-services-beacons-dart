@@ -7,3 +7,4 @@ export './BeaconsGrpcClientV1.dart';
 export './BeaconsGrpcConverterV1.dart';
 export './BeaconsRestClientV1.dart';
 export './BeaconsMockClientV1.dart';
+export './BeaconsLambdaClientV1.dart';

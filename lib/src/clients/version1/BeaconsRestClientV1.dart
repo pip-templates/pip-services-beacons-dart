@@ -57,11 +57,8 @@ class BeaconsRestClientV1 extends RestClient implements IBeaconsClientV1 {
     var time = instrument(correlationId, 'beacons.calculate_position');
     try {
       var udiStr = udis.reduce((value, element) => value + ',' + element);
-      var response = await call(
-          'get',
-          '/beacons/calculate_position/$siteId/$udiStr',
-          correlationId,
-          {'udis': udiStr, 'site_id': siteId});
+      var response = await call('get',
+          '/beacons/calculate_position/$siteId/$udiStr', correlationId, null);
       return json.decode(response);
     } finally {
       time.endTiming();

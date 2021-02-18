@@ -46,7 +46,7 @@ class BeaconsMockClientV1 implements IBeaconsClientV1 {
     paging = paging ?? PagingParams();
     var skip = paging.getSkip(-1);
     var take = paging.getTake(_maxPageSize);
-    var total = null;
+    var total;
 
     if (paging.total) total = beacons.length;
     if (skip > 0) beacons = beacons.sublist(skip);

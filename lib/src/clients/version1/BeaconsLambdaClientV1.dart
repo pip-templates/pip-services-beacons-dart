@@ -1,101 +1,57 @@
-// import { FilterParams, ConfigParams } from 'pip-services3-commons-node';
-// import { PagingParams } from 'pip-services3-commons-node';
-// import { DataPage } from 'pip-services3-commons-node';
-// import { CommandableLambdaClient } from 'pip-services3-aws-node';
+// import 'dart:async';
 
-// import { BeaconV1 } from '../../data/version1/BeaconV1';
-// import { IBeaconsClientV1 } from './IBeaconsClientV1';
+// import 'package:pip_services3_commons/pip_services3_commons.dart';
+// import 'package:pip_services3_aws/pip_services3_aws.dart';
+// import 'package:pip_templates_microservice_dart/src/clients/version1/IBeaconsClientV1.dart';
+// import 'package:pip_templates_microservice_dart/src/data/version1/BeaconV1.dart';
 
-// export class BeaconsLambdaClientV1 extends CommandableLambdaClient implements IBeaconsClientV1 {
+// class BeaconsLambdaClientV1 extends CommandableLambdaClient
+//     implements IBeaconsClientV1 {
+//   BeaconsLambdaClientV1([var config]) : super('v1/beacons') {
+//     if (config != null) configure(ConfigParams.fromValue(config));
+//   }
 
-//     constructor(config?: any) {
-//         // Todo: 'v1/beacons' or just 'beacons' for lambda (like in SettingsLambdaClientV1.ts)?
-//         super('v1/beacons');
+//   @override
+//   Future<DataPage<BeaconV1>> getBeacons(
+//       String correlationId, FilterParams filter, PagingParams paging) async {
+//     return await callCommand(
+//         'get_beacons', correlationId, {'filter': filter, 'paging': paging});
+//   }
 
-//         if (config != null)
-//             this.configure(ConfigParams.fromValue(config));
-//     }
+//   @override
+//   Future<BeaconV1> getBeaconById(String correlationId, String beaconId) async {
+//     return await callCommand(
+//         'get_beacon_by_id', correlationId, {'beacon_id': beaconId});
+//   }
 
-//     public getBeacons(correlationId: string, filter: FilterParams, paging: PagingParams,
-//         callback: (err: any, page: DataPage<BeaconV1>) => void): void {
-//         this.callCommand(
-//             'get_beacons',
-//             correlationId,
-//             { filter: filter, paging: paging },
-//             callback
-//         );
-//     }
+//   @override
+//   Future<BeaconV1> getBeaconByUdi(String correlationId, String udi) async {
+//     return await callCommand('get_beacon_by_udi', correlationId, {'udi': udi});
+//   }
 
-//     public getBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'get_beacon_by_id',
-//             correlationId,
-//             {
-//                 beacon_id: beaconId
-//             },
-//             callback
-//         );
-//     }
+//   @override
+//   Future<Map<String, dynamic>> calculatePosition(
+//       String correlationId, String siteId, List<String> udis) async {
+//     return await callCommand(
+//         'calculate_position', correlationId, {'site_id': siteId, 'udis': udis});
+//   }
 
-//     public getBeaconByUdi(correlationId: string, udi: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'get_beacon_by_udi',
-//             correlationId,
-//             {
-//                 udi: udi
-//             },
-//             callback
-//         );
-//     }
+//   @override
+//   Future<BeaconV1> createBeacon(String correlationId, BeaconV1 beacon) async {
+//     return await callCommand(
+//         'create_beacon', correlationId, {'beacon': beacon});
+//   }
 
-//     public calculatePosition(correlationId: string, siteId: string, udis: string[],
-//         callback: (err: any, position: any) => void): void {
-//         this.callCommand(
-//             'calculate_position',
-//             correlationId,
-//             {
-//                 site_id: siteId,
-//                 udis: udis
-//             },
-//             callback
-//         );
-//     }
+//   @override
+//   Future<BeaconV1> updateBeacon(String correlationId, BeaconV1 beacon) async {
+//     return await callCommand(
+//         'update_beacon', correlationId, {'beacon': beacon});
+//   }
 
-//     public createBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'create_beacon',
-//             correlationId,
-//             {
-//                 beacon: beacon
-//             },
-//             callback
-//         );
-//     }
-
-//     public updateBeacon(correlationId: string, beacon: BeaconV1,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'update_beacon',
-//             correlationId,
-//             {
-//                 beacon: beacon
-//             },
-//             callback
-//         );
-//     }
-
-//     public deleteBeaconById(correlationId: string, beaconId: string,
-//         callback: (err: any, beacon: BeaconV1) => void): void {
-//         this.callCommand(
-//             'delete_beacon_by_id',
-//             correlationId,
-//             {
-//                 beacon_id: beaconId
-//             },
-//             callback
-//         );
-//     }
+//   @override
+//   Future<BeaconV1> deleteBeaconById(
+//       String correlationId, String beaconId) async {
+//     return await callCommand(
+//         'delete_beacon_by_id', correlationId, {'beacon_id': beaconId});
+//   }
 // }

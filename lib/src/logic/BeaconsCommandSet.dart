@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:pip_services3_commons/pip_services3_commons.dart';
 
 import '../../src/data/version1/BeaconV1Schema.dart';

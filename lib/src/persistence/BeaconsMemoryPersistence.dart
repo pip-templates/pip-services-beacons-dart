@@ -48,7 +48,7 @@ class BeaconsMemoryPersistence
       if (udi != null && item.udi != udi) {
         return false;
       }
-      if (udis != null && (udis as List).indexOf(item.udi) < 0) {
+      if (udis != null && !(udis as List).contains(item.udi)) {
         return false;
       }
       return true;
