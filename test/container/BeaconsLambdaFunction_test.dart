@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:pip_templates_microservice_dart/src/container/BeaconsLambdaFunction.dart';
-import 'package:pip_templates_microservice_dart/src/data/version1/BeaconTypeV1.dart';
-import 'package:pip_templates_microservice_dart/src/data/version1/BeaconV1.dart';
+import 'package:pip_services_beacons_dart/src/container/BeaconsLambdaFunction.dart';
+import 'package:pip_services_beacons_dart/src/data/version1/BeaconTypeV1.dart';
+import 'package:pip_services_beacons_dart/src/data/version1/BeaconV1.dart';
 import 'package:test/test.dart';
 import 'package:pip_services3_commons/pip_services3_commons.dart';
 

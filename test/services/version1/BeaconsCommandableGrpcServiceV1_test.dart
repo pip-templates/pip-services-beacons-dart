@@ -7,7 +7,7 @@ import 'package:pip_services3_grpc/src/generated/commandable.pb.dart'
     as messages;
 
 import 'package:pip_services3_commons/pip_services3_commons.dart';
-import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
+import 'package:pip_services_beacons_dart/pip_services_beacons_dart.dart';
 
 final BEACON1 = BeaconV1(
     id: '1',
@@ -220,7 +220,6 @@ void main() {
       request.argsJson = json.encode({'beacon_id': beacon1.id});
       response = await client.invoke(request);
       expect(response.resultEmpty, isTrue);
-      
     });
   });
 }

@@ -22,4 +22,4 @@ EXPOSE "8080:8080"
 
 # Specify the command for running the service
 CMD []
-ENTRYPOINT ["/usr/bin/dart", "./bin/run.dart"]
+ENTRYPOINT ["/usr/bin/dart", "./bin/main.dart"]

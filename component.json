@@ -1,6 +1,6 @@
 {
-    "name": "pip-templates-microservice-dart",
+    "name": "pip-services-beacons-dart-dart",
     "registry": "pipdevs",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "build": 1
 }

@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
+import 'package:pip_services_beacons_dart/pip_services_beacons_dart.dart';
 import './BeaconsClientV1Fixture.dart';
 
 void main() {

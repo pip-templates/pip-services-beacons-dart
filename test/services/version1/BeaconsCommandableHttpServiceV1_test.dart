@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
 import 'package:pip_services3_commons/pip_services3_commons.dart';
-import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
+import 'package:pip_services_beacons_dart/pip_services_beacons_dart.dart';
 
 final BEACON1 = BeaconV1(
     id: '1',

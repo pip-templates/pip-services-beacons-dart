@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:pip_templates_microservice_dart/src/clients/version1/BeaconsLambdaClientV1.dart';
+import 'package:pip_services_beacons_dart/src/clients/version1/BeaconsLambdaClientV1.dart';
 import 'package:test/test.dart';
 import 'package:pip_services3_commons/pip_services3_commons.dart';
 

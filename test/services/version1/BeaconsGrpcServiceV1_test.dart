@@ -2,10 +2,10 @@ import 'package:test/test.dart';
 import 'package:grpc/grpc.dart' as grpc;
 
 import 'package:pip_services3_commons/pip_services3_commons.dart';
-import 'package:pip_templates_microservice_dart/pip_template_microservice.dart';
-import 'package:pip_templates_microservice_dart/src/generated/beacons_v1.pbgrpc.dart'
+import 'package:pip_services_beacons_dart/pip_services_beacons_dart.dart';
+import 'package:pip_services_beacons_dart/src/generated/beacons_v1.pbgrpc.dart'
     as beaconsgrpc;
-import 'package:pip_templates_microservice_dart/src/generated/beacons_v1.pb.dart'
+import 'package:pip_services_beacons_dart/src/generated/beacons_v1.pb.dart'
     as messages;
 
 final BEACON1 = BeaconV1(
@@ -186,7 +186,6 @@ void main() {
       expect(beacon.id, isEmpty);
       expect(beacon.siteId, isEmpty);
       expect(beacon.type, isEmpty);
-      
     });
   });
 }
