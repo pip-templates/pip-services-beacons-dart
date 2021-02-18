@@ -1,24 +1,30 @@
-# <img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> 
-# Beacons microservice
+# <img src="https://github.com/pip-services/pip-services/raw/master/design/Logo.png" alt="Pip.Services Logo" style="max-width:30%"> <br/> Beacons microservice
 
-This is the Beacons microservice from the Pip.Templates library. 
+This microservice stores information about BLE beacons that emit unique device IDs (UDIs) over bluetooth protocol.
+And then it uses that information to triangulate position of users based on UDIs their devices detect around them.
 
-The microservice currently supports the following deployment options:
-* Deployment platforms: Standalone Process
-* External APIs: HTTP/REST, gRPC
+Supported functionality:
+* Deployment platforms: Standalone Process, Docker, AWS Lambda
+* External APIs: HTTP (REST and Commandable), GRPC (Custom and Commandable)
 * Persistence: Memory, Flat Files, MongoDB
+* Health checks: Heartbeat, Status
+* Consolidated logging: ElasticSearch, CloudWatch
+* Consolidated metrics: Prometheus, CloudWatch
 
 This microservice does not depend on other microservices.
 
-<a name="links"></a> Quick Links:
+<a name="links"></a> Quick links:
 
-* [Download Links](doc/Downloads.md)
-* [Development Guide](doc/Development.md)
-* [Configuration Guide](doc/Configuration.md)
-* [Deployment Guide](doc/Deployment.md)
-* Communication Protocols
-  - [HTTP Version 1](doc/HttpProtocolV1.md)
-  - [gRPC Version 1](doc/GrpcProtocolV1.md)
+* Communication Protocols:
+  - [gRPC Version 1](lib/src/protos/beacons_v1.proto)
+  - [HTTP Version 1](lib/src/swagger/beacons_v1.yaml)
+* Client SDKs:
+  - [Node.js SDK](https://github.com/pip-templates/pip-clients-beacons-node)
+  - [.NET SDK](https://github.com/pip-templates/pip-clients-beacons-dotnet)
+  - [Golang SDK](https://github.com/pip-templates/pip-clients-beacons-go)
+* [API Reference](https://pub.dev/documentation/pip_services_beacons/latest/pip_services_beacons/pip_services_beacons-library.html)
+* [Change Log](CHANGELOG.md)
+
 
 ## Contract
 
@@ -65,120 +71,101 @@ abstract class IBeaconsClientV1 {
 
 ```
 
-## Download
+## Get
 
-Right now, the only way to get the microservice is to check it out directly from the GitHub repository
+Get the microservice source from GitHub:
 ```bash
-git clone https://github.com/pip-templates/pip-templates-microservice-dart.git
+git clone git@github.com:pip-templates/pip-services-beacons-dart.git
 ```
 
-The Pip.Service team is working on implementing packaging, to make stable releases available as zip-downloadable archives.
+Install the microservice as a binary dependency:
+```bash
+pub get
+```
 
+Get docker image for the microservice:
+```bash
+docker pull pipdevs/pip-services-beacons-dart:latest
+```
 ## Run
 
-Add the **config.yml** file to the config folder and set configuration parameters as needed.
+The microservice can be configured using the environment variables:
+* AWS_LAMDBA_ARN - a unique Amazon Resource Name
+* AWS_ACCESS_ID - AWS access/client id
+* AWS_ACCESS_KEY - AWS access/client id
+* CLOUD_WATCH_ENABLED -  turn on CloudWatch loggers and metrics
+* CLOUD_WATCH_STREAM - Cloud Watch Log stream (default: context name)
+* CLOUD_WATCH_GROUP - Cloud Watch Log group (default: context instance ID or hostname)
+* ELASTICSEARCH_LOGGING_ENABLED - turn on Elasticsearch logs and metrics
+* ELASTICSEARCH_PROTOCOL - connection protocol: http or https
+* ELASTICSEARCH_SERVICE_URI - resource URI or connection string with all parameters in it
+* ELASTICSEARCH_SERVICE_HOST - host name or IP address
+* ELASTICSEARCH_SERVICE_PORT - port number
+* FILE_ENABLED - turn on file persistence. Keep it undefined to turn it off
+* FILE_PATH - file path where persistent data shall be stored (default: ../data/id_records.json) 
+* MEMORY_ENABLED - turn on in-memory persistence. Keep it undefined to turn it off
+* MONGO_ENABLED - turn on MongoDB persistence. Keep it undefined to turn it off
+* MONGO_SERVICE_URI - URI to connect to MongoDB. When it's defined other database parameters are ignored
+* MONGO_SERVICE_HOST - MongoDB hostname or server address
+* MONGO_SERVICE_PORT - MongoDB port number (default: 3360)
+* MONGO_DB - MongoDB database name (default: app)
+* MONGO_COLLECTION - MongoDB collection (default: id_records)
+* MONGO_USER - MongoDB user login
+* MONGO_PASS - MongoDB user password
+* PUSHGATEWAY_METRICS_ENABLED - turn on pushgetway for prometheus
+* PUSHGATEWAY_PROTOCOL - connection protocol: http or https
+* PUSHGATEWAY_METRICS_SERVICE_URI - resource URI or connection string with all parameters in it
+* PUSHGATEWAY_METRICS_SERVICE_HOST - host name or IP address
+* PUSHGATEWAY_METRICS_SERVICE_PORT - port number
+* HTTP_ENABLED - turn on HTTP endpoint
+* HTTP_PORT - HTTP port number (default: 8080)
+* GRPC_ENABLED - turn on GRPC endpoint
+* GRPC_PORT - GRPC port number (default: 8090)
 
-Example of a microservice configuration
-```yaml
----
-# Container descriptor
-- descriptor: "pip-services:context-info:default:default:1.0"
-  name: "beacons"
-  description: "Beacons microservice"
 
-# Console logger
-- descriptor: "pip-services:logger:console:default:1.0"
-  level: "trace"
-
-# Perfomance counter that post values to log
-- descriptor: "pip-services:counters:log:default:1.0"
-
-{{#MEMORY_ENABLED}}
-# In-memory persistence. Use only for testing!
-- descriptor: "beacons:persistence:memory:default:1.0"
-{{/MEMORY_ENABLED}}
-
-{{#FILE_ENABLED}}
-# File persistence
-- descriptor: "beacons:persistence:file:default:1.0"
-  path: {{FILE_PATH}}{{^FILE_PATH}}"./data/beacons.json"{{/FILE_PATH}}
-{{/FILE_ENABLED}}
-    
-{{#MONGO_ENABLED}}
-# MongoDb persistence
-- descriptor: "beacons:persistence:mongodb:default:1.0"
-  connection:
-    uri: {{MONGO_SERVICE_URI}}
-    host: {{MONGO_SERVICE_HOST}}{{^MONGO_SERVICE_HOST}}"localhost"{{/MONGO_SERVICE_HOST}}
-    port: {{MONGO_SERVICE_PORT}}{{^MONGO_SERVICE_PORT}}27017{{/MONGO_SERVICE_PORT}}
-    database: {{MONGO_DB}}{{^MONGO_DB}}"test"{{/MONGO_DB}}
-{{/MONGO_ENABLED}}
-
-{{^MEMORY_ENABLED}}{{^FILE_ENABLED}}{{^MONGO_ENABLED}}
-# In-memory persistence. Use only for testing!
-- descriptor: "beacons:persistence:memory:default:1.0"
-{{/MONGO_ENABLED}}{{/FILE_ENABLED}}{{/MEMORY_ENABLED}}
-
-# Controller
-- descriptor: "beacons:controller:default:default:1.0"
-
-# Common HTTP endpoint
-- descriptor: "pip-services:endpoint:http:default:1.0"
-  connection:
-    protocol: http
-    host: 0.0.0.0
-    port: {{HTTP_PORT}}{{^HTTP_PORT}}8080{{/HTTP_PORT}}
-
-# HTTP endpoint service version 1.0
-- descriptor: "beacons:service:commandable-http:default:1.0"
-
-# Hearbeat service
-- descriptor: "pip-services:heartbeat-service:http:default:1.0"
-
-# Status service
-- descriptor: "pip-services:status-service:http:default:1.0"
-
-{{#GRPC_ENABLED}}
-# Common GRPC endpoint
-- descriptor: "beacons:endpoint:grpc:default:1.0"
-  connection:
-    protocol: http
-    host: 0.0.0.0
-    port: 8090
-    
-# GRPC endpoint service version 1.0
-- descriptor: "beacons:service:grpc:default:1.0"
-  
-# Commandable GRPC endpoint version 1.0
-- descriptor: "beacons:service:commandable-grpc:default:1.0"
-{{/GRPC_ENABLED}}
+Start the microservice as process:
+```bash
+dart ./bin/main.dart
 ```
 
-For more information on microservice configuration, see [The Configuration Guide](Configuration.md).
-
-The microservice can be started using the command:
+Run the microservice in docker:
+Then use the following command:
 ```bash
-dart ./bin/run.dart
+./run.ps1
+```
+
+Launch the microservice with all infrastructure services using docker-compose:
+```bash
+docker-compose -f ./docker/docker-compose.yml up
 ```
 
 ## Use
 
-The easiest way to work with the microservice is through the client SDK. 
-
-If you use dart, then get references to the required libraries:
-- Pip.Services3.Commons : https://github.com/pip-services3-dart/pip-services3-commons-dart
-- Pip.Services3.Rpc: 
-https://github.com/pip-services3-dart/pip-services3-rpc-dart
-
-<!-- Todo: rename pip-templates-microservice-dart -->
-Add **pip-services3-commons-dart** and **pip-templates-microservice-dart** packages
-```dart
-import 'package:pip_services3_commons/pip_services3_commons.dart';
-import 'package:pip_templates_microservice/pip_templates_microservice.dart';
-
+Add this to your package's pubspec.yaml file:
+```yaml
+dependencies:
+  pip_services_beacons_dart: version
 ```
 
-Define client configuration parameters that match the configuration of the microservice's external API
+Now you can install package from the command line:
+```bash
+pub get
+```
+
+Inside your code get the reference to the client SDK
+```dart
+import 'package:pip_services3_commons/pip_services3_commons.dart';
+
+import 'package:pip_services_beacons_dart/pip_services_beacons_dart.dart';
+```
+
+Instantiate the client
+```dart
+// Create the client instance
+var client = new BeaconsCommandableHttpClientV1();
+```
+
+Define client connection parameters
 ```dart
 // Client configuration
 var httpConfig = ConfigParams.fromTuples(
@@ -186,27 +173,24 @@ var httpConfig = ConfigParams.fromTuples(
 	"connection.host", "localhost",
 	"connection.port", 8080
 );
-```
-
-Instantiate the client and open a connection to the microservice
-```dart
-// Create the client instance
-var client = BeaconsCommandableHttpClientV1();
 
 // Configure the client
 client.configure(httpConfig);
+```
 
+Connect to the microservice
+```dart
 // Connect to the microservice
 try{
   await client.open(null)
 }catch() {
   // Error handling...
-}       
+}  
+
 // Work with the microservice
-// ...
 ```
 
-The client is now ready to perform operations
+Call the microservice using the client API
 ```dart
 // Define a beacon
 final BEACON1 = BeaconV1.fromMap({
@@ -219,30 +203,78 @@ final BEACON1 = BeaconV1.fromMap({
     'radius': 50.0
 });
 
-    // Create the beacon
-    try {
-      var beacon = await client.createBeacon('123', BEACON1);
-      // Do something with the returned beacon...
-    } catch(err) {
-      // Error handling...     
-    }
-      
-    // Get a list of beacons
-    try {
-      var page = await client.getBeacons(
-            null, FilterParams.fromTuples([
-              "label", "TestBeacon",
-            ]), PagingParams(0, 10));
-      // Do something with the returned page...
-      // E.g. beacon = page.data[0];
-    } catch(err) {              
-        // Error handling...
-    }   
-
+// Create the beacon
+try {
+  var beacon = await client.createBeacon('123', BEACON1);
+  // Do something with the returned beacon...
+} catch(err) {
+  // Error handling...     
+}
+  
+// Get a list of beacons
+try {
+  var page = await client.getBeacons(
+        null, FilterParams.fromTuples([
+          "label", "TestBeacon",
+        ]), PagingParams(0, 10));
+  // Do something with the returned page...
+  // E.g. beacon = page.data[0];
+} catch(err) {              
+    // Error handling...
+}   
 ```
 
-## Acknowledgements
+## Develop
 
-This microservice was created and currently maintained by 
-- **Sergey Seroukhov**.
-- **Levichev Dmitry**
+For development you shall install the following prerequisites:
+* Dart SDK 2
+* Visual Studio Code or another IDE of your choice
+* Docker
+
+Install dependencies:
+```bash
+pub get
+```
+
+Compile the microservice:
+```bash
+tsc
+```
+
+Before running tests launch infrastructure services and required microservices:
+```bash
+docker-compose -f ./docker-compose.dev.yml up
+```
+
+Run automated tests:
+```bash
+pub run test
+```
+
+Run automated benchmarks:
+```bash
+npm run benchmark
+```
+
+Generate GRPC protobuf stubs:
+```bash
+./protogen.ps1
+```
+
+Generate API documentation:
+```bash
+./docgen.ps1
+```
+
+Before committing changes run dockerized build and test as:
+```bash
+./build.ps1
+./test.ps1
+./package.ps1
+./run.ps1
+./clear.ps1
+```
+
+## Contacts
+
+This microservice was created and currently maintained by *Sergey Seroukhov*.
