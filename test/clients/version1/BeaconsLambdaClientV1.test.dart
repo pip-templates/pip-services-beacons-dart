@@ -1,73 +1,57 @@
-// import { ConfigParams } from 'pip-services3-commons-node';
+import 'dart:io';
+import 'package:pip_templates_microservice_dart/src/clients/version1/BeaconsLambdaClientV1.dart';
+import 'package:test/test.dart';
+import 'package:pip_services3_commons/pip_services3_commons.dart';
 
-// // import { BeaconsLambdaServiceV1 } from '../../../src/services/version1/BeaconsLambdaServiceV1';
-// import { BeaconsLambdaClientV1 } from '../../../src/clients/version1/BeaconsLambdaClientV1';
-// import { BeaconsClientV1Fixture } from './BeaconsClientV1Fixture';
+import 'BeaconsClientV1Fixture.dart';
 
-// // Todo: add a BeaconsLambdaServiceV1?
-// suite('BeaconsLambdaClientV1', () => {
-//     let AWS_LAMDBA_ARN = process.env["AWS_LAMDBA_ARN"] || "";
-//     let AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
-//     let AWS_ACCESS_KEY = process.env["AWS_ACCESS_KEY"] || "";
+void main() {
+  var AWS_ACCESS_ID = Platform.environment['AWS_ACCESS_ID'];
+  var AWS_ACCESS_KEY = Platform.environment['AWS_ACCESS_KEY'];
+  var AWS_LAMBDA_ARN = Platform.environment['AWS_LAMBDA_ARN'];
 
-//     if (!AWS_LAMDBA_ARN || !AWS_ACCESS_ID || !AWS_ACCESS_KEY)
-//         return;
+  group('BeaconsLambdaClientV1', () {
+    if (AWS_ACCESS_ID == null ||
+        AWS_ACCESS_KEY == null ||
+        AWS_LAMBDA_ARN == null) {
+      return;
+    }
 
-//     let config = ConfigParams.fromTuples(
-//         "lambda.connection.protocol", "aws",
-//         "lambda.connection.arn", AWS_LAMDBA_ARN,
-//         "lambda.credential.access_id", AWS_ACCESS_ID,
-//         "lambda.credential.access_key", AWS_ACCESS_KEY,
-//         "lambda.options.connection_timeout", 30000
-//     );
-//     let lambdaConfig = config.getSection('lambda');
+    var lambdaConfig = ConfigParams.fromTuples([
+      'connection.protocol',
+      'aws',
+      'connection.arn',
+      AWS_LAMBDA_ARN,
+      'credential.access_id',
+      AWS_ACCESS_ID,
+      'credential.access_key',
+      AWS_ACCESS_KEY,
+      'options.connection_timeout',
+      30000
+    ]);
 
-//     // Skip if connection is not configured
-//     if (lambdaConfig.getAsNullableString("connection.protocol") != "aws")
-//         return;
+    BeaconsLambdaClientV1 client;
+    BeaconsClientV1Fixture fixture;
 
-//     // let service: BeaconsLambdaServiceV1;
-//     let client: BeaconsLambdaClientV1;
-//     let fixture: BeaconsClientV1Fixture;
+    setUp(() async {
+      client = BeaconsLambdaClientV1();
+      client.configure(lambdaConfig);
 
-//     setup((done) => {
-// /*         service = new BeaconsLambdaServiceV1();
-//         service.configure(lambdaConfig); */
+      fixture = BeaconsClientV1Fixture(client);
 
-//         client = new BeaconsLambdaClientV1();
-//         client.configure(lambdaConfig);
+      await client.open(null);
+    });
 
-// /*        service.setReferences(references);
-//         client.setReferences(references); */
+    tearDown(() async {
+      await client.close(null);
+    });
 
-//         fixture = new BeaconsClientV1Fixture(client);
+    test('Crud Operations', () async {
+      await fixture.testCrudOperations();
+    });
 
-// /*         service.open(null, (err) => {
-//                 if (err) {
-//                     done(err);
-//                     return;
-//                 } */
-
-//                 client.open(null, done);
-// /*             });*/
-//     });
-
-// /*     teardown((done) => {
-//         client.close(null, (err) => {
-//             service.close(null, done);
-//         });
-//     }); */
-
-//     teardown((done) => {
-//         client.close(null, done);
-//     });
-
-//     test('CRUD Operations', (done) => {
-//         fixture.testCrudOperations(done);
-//     });
-
-//     test('Calculate Position', (done) => {
-//         fixture.testCalculatePosition(done);
-//     });
-
-// });
+    test('Calculate Position', () async {
+      await fixture.testCalculatePosition();
+    });
+  });
+}

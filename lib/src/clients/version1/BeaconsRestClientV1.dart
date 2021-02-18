@@ -6,7 +6,8 @@ import 'package:pip_services3_commons/src/data/PagingParams.dart';
 import 'package:pip_services3_commons/src/data/FilterParams.dart';
 import 'package:pip_services3_commons/src/data/DataPage.dart';
 import 'package:pip_services3_rpc/pip_services3_rpc.dart';
-import 'package:pip_templates_microservice_dart/src/data/version1/BeaconV1.dart';
+
+import '../../data/version1/BeaconV1.dart';
 
 import 'IBeaconsClientV1.dart';
 
